@@ -1,13 +1,15 @@
 package Usuarios;
 
+import TiposAtributos.Email;
 import TiposAtributos.Endereco;
+import TiposAtributos.Telefone;
 
 import java.util.Scanner;
 
 public class Cliente extends Usuario{
     private double saldo;
 
-    public Cliente(String nome, Endereco endereco, String telefone, String email, int senha) {
+    public Cliente(String nome, Endereco endereco, Telefone telefone, Email email, String senha) {
         super(nome, endereco, telefone, email, senha);
     }
 

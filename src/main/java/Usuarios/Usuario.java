@@ -1,21 +1,25 @@
 package Usuarios;
 
+import TiposAtributos.Email;
 import TiposAtributos.Endereco;
+import TiposAtributos.Telefone;
 
 import java.util.Objects;
 
 public class Usuario {
     String nome;
+    String cpf;
+    String dataNascimento;
     Endereco endereco;
-    String telefone;
-    String email;
-    protected int senha;
+    Telefone telefone;
+    Email email;
+    protected String senha;
 
     public Usuario( String nome,
                     Endereco endereco,
-                    String telefone,
-                    String email,
-                    int senha){
+                    Telefone telefone,
+                    Email email,
+                    String senha){
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;

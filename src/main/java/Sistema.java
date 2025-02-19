@@ -1,4 +1,6 @@
+import TiposAtributos.Email;
 import TiposAtributos.Endereco;
+import TiposAtributos.Telefone;
 import Usuarios.Caixa;
 import Usuarios.Cliente;
 import Usuarios.Gerente;
@@ -7,7 +9,7 @@ import Usuarios.Usuario;
 public class Sistema {
     static int id = 0;
 
-    void criarUsuario(String nome, Endereco endereco, String telefone, String email, int senha){
+    void criarUsuario(String nome, Endereco endereco, Telefone telefone, Email email, String senha){
         String tipoUsuario = "CLIENTE";
         switch (tipoUsuario){
             case "CAIXA":
