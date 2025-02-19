@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Cliente extends Usuario{
     private double saldo;
 
-    public Cliente(String nome, Endereco endereco, String telefone, String email, int senha) {
+    public Cliente(String nome, String endereco, String telefone, String email, int senha) {
         super(nome, endereco, telefone, email, senha);
     }
 

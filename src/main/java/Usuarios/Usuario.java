@@ -6,13 +6,13 @@ import java.util.Objects;
 
 public class Usuario {
     String nome;
-    Endereco endereco;
+    String endereco;
     String telefone;
     String email;
     protected int senha;
 
     public Usuario( String nome,
-                    Endereco endereco,
+                    String endereco,
                     String telefone,
                     String email,
                     int senha){

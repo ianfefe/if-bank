@@ -7,7 +7,7 @@ import Usuarios.Usuario;
 public class Sistema {
     static int id = 0;
 
-    void criarUsuario(String nome, Endereco endereco, String telefone, String email, int senha){
+    void criarUsuario(String nome, String endereco, String telefone, String email, int senha){
         String tipoUsuario = "CLIENTE";
         switch (tipoUsuario){
             case "CAIXA":
