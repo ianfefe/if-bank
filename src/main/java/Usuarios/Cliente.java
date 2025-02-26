@@ -1,5 +1,6 @@
 package Usuarios;
 
+import TiposAtributos.CPF;
 import TiposAtributos.Email;
 import TiposAtributos.Endereco;
 import TiposAtributos.Telefone;
@@ -7,10 +8,17 @@ import TiposAtributos.Telefone;
 import java.util.Scanner;
 
 public class Cliente extends Usuario{
-    private double saldo;
+    private double saldo = 0;
 
-    public Cliente(String nome, Endereco endereco, Telefone telefone, Email email, String senha) {
-        super(nome, endereco, telefone, email, senha);
+    public Cliente(String nome,
+                   String dataNascimento,
+                   CPF cpf,
+                   Endereco endereco,
+                   Telefone telefone,
+                   Email email,
+                   String senha) {
+        super(nome,dataNascimento,cpf,endereco,telefone,email,senha);
+        tipoUsuario = "Cliente";
     }
 
     public double getSaldo(){
@@ -41,15 +49,15 @@ public class Cliente extends Usuario{
         Scanner scanner = new Scanner(System.in);
         for(int i = 3; true; i--){
             int senhatemp = scanner.nextInt();
-            if(senhatemp != this.senha){
-                if(i == 1){
-                    throw new RuntimeException("Tentativas esgotadas, cancelando operação.");
-                }
-                System.out.println("Senha incorreta, tente novamente" +
-                        i + " tentativas restantes");
-            }else{
-                break;
-            }
+//            if(senhatemp != this.senha){
+//                if(i == 1){
+//                    throw new RuntimeException("Tentativas esgotadas, cancelando operação.");
+//                }
+//                System.out.println("Senha incorreta, tente novamente" +
+//                        i + " tentativas restantes");
+//            }else{
+//                break;
+//            }
         }
     }
 
@@ -66,5 +74,22 @@ public class Cliente extends Usuario{
     void investeVariavel(){
         //autoriza investimento
         confirmarSenha();
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nome='" + nome + '\'' +
+                ", dataNascimento='" + dataNascimento + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
+    }
+
+    public String getSaldoString() {
+        return String.valueOf(this.saldo);
     }
 }

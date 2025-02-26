@@ -1,8 +1,8 @@
 package Exceptions;
 
-public class EmailException extends Exception {
+public class EmailException extends RuntimeException {
 
     public EmailException() {
-        super("E-mail inválido!");
+        super("Email inválido!");
     }
 }

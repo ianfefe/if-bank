@@ -13,11 +13,10 @@ public class Telefone {
         setTelefone(telefone);
     }
 
-    private boolean isTelefoneValido(String email) {
-        String telefonRegex =
-                "^[0-9]{8,9}$";
+    private boolean isTelefoneValido(String telefone) {
+        String telefoneRegex = "^\\([0-9]{2}\\)[0-9]{4}-[0-9]{4}$";
 
-        Pattern pattern = Pattern.compile(telefonRegex);
+        Pattern pattern = Pattern.compile(telefoneRegex);
         Matcher matcher = pattern.matcher(telefone);
         return matcher.matches();
     }

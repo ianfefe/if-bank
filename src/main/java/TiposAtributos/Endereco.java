@@ -16,8 +16,7 @@ public class Endereco {
     }
 
     private boolean isRuaValida(String rua) {
-        String ruaRegex =
-                "^[a-zA-Z- ]$";
+        String ruaRegex = "^[\\p{L}\\s]+$";
 
         Pattern pattern = Pattern.compile(ruaRegex);
         Matcher matcher = pattern.matcher(rua);

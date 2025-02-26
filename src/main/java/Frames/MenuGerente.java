@@ -1,8 +1,10 @@
 package Frames;
 
+import Usuarios.Gerente;
+
 import javax.swing.*;
 
-public class MenuAdm {
+public class MenuGerente extends JFrame{
     private JTabbedPane tabbedPane1;
     private JButton transferirButton;
     private JTabbedPane tabbedPane2;
@@ -16,4 +18,8 @@ public class MenuAdm {
     private JTabbedPane tabbedPane5;
     private JTabbedPane tabbedPane6;
     private JTable table1;
+    private JButton sairButton;
+
+    public MenuGerente(Gerente usuarioLogado) {
+    }
 }

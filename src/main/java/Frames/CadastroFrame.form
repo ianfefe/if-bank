@@ -91,7 +91,7 @@
                   <text value="Telefone"/>
                 </properties>
               </component>
-              <component id="dba34" class="javax.swing.JTextField" binding="campoEmail">
+              <component id="16481" class="javax.swing.JTextField" binding="campoEmail">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -99,7 +99,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="b7a34" class="javax.swing.JTextField" binding="campoTelefone">
+              <component id="17412" class="javax.swing.JFormattedTextField" binding="campoTelefone">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -140,10 +140,10 @@
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="CEP"/>
+                  <text value="Rua"/>
                 </properties>
               </component>
-              <component id="a5e7f" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+              <component id="a5e7f" class="javax.swing.JTextField" binding="campoNumeroEndereco">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -151,7 +151,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="c6a31" class="javax.swing.JTextField" binding="textField4" default-binding="true">
+              <component id="e0c62" class="javax.swing.JTextField" binding="campoRua">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -167,7 +167,7 @@
                   <text value="Complemento"/>
                 </properties>
               </component>
-              <component id="d013c" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+              <component id="d013c" class="javax.swing.JComboBox" binding="complementoBox">
                 <constraints>
                   <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -225,7 +225,7 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="3354d" class="javax.swing.JTextField" binding="campoDataNascimento">
+          <component id="3aed9" class="javax.swing.JFormattedTextField" binding="campoDataNascimento">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -235,7 +235,7 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="10b56" class="javax.swing.JTextField" binding="campoCPF">
+          <component id="a47a5" class="javax.swing.JFormattedTextField" binding="campoCPF">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -247,6 +247,14 @@
           </component>
         </children>
       </grid>
+      <component id="f5909" class="javax.swing.JButton" binding="botaoVoltar">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Voltar"/>
+        </properties>
+      </component>
     </children>
   </grid>
   <buttonGroups>

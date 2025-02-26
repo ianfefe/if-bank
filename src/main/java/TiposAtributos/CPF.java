@@ -1,6 +1,8 @@
 package TiposAtributos;
 
-import Exceptions.EmailException;
+import Exceptions.CPFException;
+import Usuarios.Sistema;
+import Usuarios.Usuario;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,12 +10,12 @@ import java.util.regex.Pattern;
 public class CPF {
     private String cpf;
 
-    public CPF(String cpf) throws EmailException {
+    public CPF(String cpf) throws CPFException {
         setCPF(cpf);
     }
 
-    private boolean isCPFValido(String email) {
-        String cpfRegex = "^[0-9]{11}$";
+    private boolean isCPFValido(String cpf) {
+        String cpfRegex = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}$";
         Pattern pattern = Pattern.compile(cpfRegex);
         Matcher matcher = pattern.matcher(cpf);
         return matcher.matches();
@@ -23,9 +25,15 @@ public class CPF {
             return cpf;
     }
 
-    public void setCPF(String cpf) throws EmailException {
+    public void setCPF(String cpf) throws CPFException {
         if(! isCPFValido(cpf))
-            throw new EmailException();
+            throw new CPFException();
+
+        for (Usuario usuario : Sistema.getUsuarios()){
+            if(usuario.getCpf().equals(cpf)){
+                throw new CPFException("CPF já cadastrado");
+            }
+        }
 
         this.cpf = cpf;
     }
