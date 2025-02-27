@@ -5,10 +5,8 @@ import TiposAtributos.Email;
 import TiposAtributos.Endereco;
 import TiposAtributos.Telefone;
 
-import java.util.Scanner;
-
 public class Cliente extends Usuario{
-    private double saldo = 0;
+    private double saldo;
 
     public Cliente(String nome,
                    String dataNascimento,
@@ -19,6 +17,7 @@ public class Cliente extends Usuario{
                    String senha) {
         super(nome,dataNascimento,cpf,endereco,telefone,email,senha);
         tipoUsuario = "Cliente";
+        this.saldo = 0;
     }
 
     public double getSaldo(){
@@ -33,32 +32,16 @@ public class Cliente extends Usuario{
 
     void sacar(double valor){
         confirmarSaldo(valor);
-        confirmarSenha();
+//        confirmarSenha();
         this.saldo -= valor;
     }
 
     void depositarSaldo(Usuario usuario,double valor){
-        if(usuario instanceof Caixa || usuario instanceof Gerente){
+//        if(usuario instanceof Caixa || usuario instanceof Gerente){
             this.saldo += valor;
-        }else{
-            throw new RuntimeException("Apenas administradores podem acessar este recurso.");
-        }
-    }
-
-    void confirmarSenha(){
-        Scanner scanner = new Scanner(System.in);
-        for(int i = 3; true; i--){
-            int senhatemp = scanner.nextInt();
-//            if(senhatemp != this.senha){
-//                if(i == 1){
-//                    throw new RuntimeException("Tentativas esgotadas, cancelando operação.");
-//                }
-//                System.out.println("Senha incorreta, tente novamente" +
-//                        i + " tentativas restantes");
-//            }else{
-//                break;
-//            }
-        }
+//        }else{
+//            throw new RuntimeException("Apenas administradores podem acessar este recurso.");
+//        }
     }
 
     float consultaSaldoExtrato(){
@@ -68,12 +51,12 @@ public class Cliente extends Usuario{
 
     void investeFixo(){
         //autoriza investimento
-        confirmarSenha();
+//        confirmarSenha();
     }
 
     void investeVariavel(){
         //autoriza investimento
-        confirmarSenha();
+//        confirmarSenha();
     }
 
     @Override

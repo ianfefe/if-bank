@@ -5,6 +5,8 @@ import Usuarios.Persistencia;
 import Usuarios.Sistema;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -32,9 +34,6 @@ public class MenuCliente extends JFrame{
         setContentPane(ClientePanel);
         nomeUsuario.setText(usuarioLogado.getNome());
         atualizaSaldoView(usuarioLogado);
-        Persistencia.salvarUsuarios(Sistema.getUsuarios());
-        System.out.println(usuarioLogado.getSaldoString());
-        System.out.println(usuarioLogado.getSaldo());
 
         SaldoCheckBox.addItemListener(new ItemListener() {
             @Override
@@ -46,6 +45,26 @@ public class MenuCliente extends JFrame{
                     SaldoCheckBox.setText("Esconder saldo");
                     atualizaSaldoView(usuarioLogado);
                 }
+            }
+        });
+        botaoSair.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int sair = JOptionPane.showConfirmDialog(null,"Deseja sair?","Desconectar",2);
+                if(sair == 0){
+                    dispose();
+                    SwingUtilities.invokeLater(() -> {
+                        new LoginFrame().setVisible(true);
+                    });
+                }
+            }
+        });
+        botaoTransferir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    new TransferenciaDestinoFrame(usuarioLogado).setVisible(true);
+                });
             }
         });
     }

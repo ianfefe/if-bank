@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static Usuarios.Sistema.criarUsuario;
+import static javax.swing.JOptionPane.showConfirmDialog;
 
 public class CadastroFrame extends JFrame{
     private JTextField campoNome;
@@ -49,10 +50,14 @@ public class CadastroFrame extends JFrame{
         botaoVoltar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
-                SwingUtilities.invokeLater(() -> {
-                    new LoginFrame().setVisible(true);
-                });
+
+                int cancelar = JOptionPane.showConfirmDialog(null,"Deseja cancelar a operação? Todos os dados serão perdidos.","",2);
+                if(cancelar == 0){
+                    dispose();
+                    SwingUtilities.invokeLater(() -> {
+                        new LoginFrame().setVisible(true);
+                    });
+                }
             }
         });
 
@@ -90,7 +95,6 @@ public class CadastroFrame extends JFrame{
 
         boolean todosPreenchidos = true;
 
-        System.out.println(complementoBox.getSelectedItem());
         if (campoNome.getText().isBlank())
             todosPreenchidos = false;
 

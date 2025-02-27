@@ -73,7 +73,7 @@ public class Usuario {
         return this.tipoUsuario;
     }
 
-    void transferir(Cliente origem, Cliente destino, double valor){
+    public void transferir(Cliente origem, Cliente destino, double valor){
         Objects.requireNonNull(origem, "Conta de origem não encontrada.");
         Objects.requireNonNull(destino, "Conta de destino não encontrada.");
         origem.confirmarSaldo(valor);

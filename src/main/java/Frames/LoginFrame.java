@@ -35,7 +35,7 @@ public class LoginFrame extends JFrame{
                             dispose();
                             new MenuCliente((Cliente) usuarioLogado).setVisible(true);
                             break;
-                        case "Caixas":
+                        case "Caixa":
                             dispose();
                             new MenuCaixa((Caixa) usuarioLogado).setVisible(true);
                             break;

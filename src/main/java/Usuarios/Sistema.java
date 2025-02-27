@@ -26,18 +26,16 @@ public class Sistema {
     }
 
     public static Usuario logarUsuario(String cpf, String senha){
-        for (Usuario usuario : Sistema.usuarios) {
+        for (Usuario usuario : usuarios) {
             if(usuario.getCpfString().equals(cpf) && usuario.getSenha().equals(senha))
                 return usuario;
-            else
-                return null;
         }
         return null;
     }
 
     public static void criarUsuario(String nome, String dataNascimento, CPF cpf, Endereco endereco, Telefone telefone, Email email, String senha){
 
-        String tipoUsuario = "";
+        String tipoUsuario = "Cliente";
 
         switch (tipoUsuario){
             case "Gerente":
@@ -51,7 +49,7 @@ public class Sistema {
                 break;
         }
 
-        Persistencia.salvarUsuarios(usuarios);
+        salvaUsuarios();
     };
 
     void removerUsuario(Usuario usuario){
