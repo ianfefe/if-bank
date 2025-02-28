@@ -1,8 +1,8 @@
 package TiposAtributos;
 
 import Exceptions.CPFException;
+import Usuarios.Cliente;
 import Usuarios.Sistema;
-import Usuarios.Usuario;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,8 +29,8 @@ public class CPF {
         if(! isCPFValido(cpf))
             throw new CPFException();
 
-        for (Usuario usuario : Sistema.getUsuarios()){
-            if(usuario.getCpf().equals(cpf)){
+        for (Cliente cliente : Sistema.getClientes()){
+            if(cliente.getCpfString().equals(cpf)){
                 throw new CPFException("CPF já cadastrado");
             }
         }

@@ -1,6 +1,8 @@
 package Usuarios;
 
 import Frames.LoginFrame;
+import Persistencias.PersistenciaAdm;
+import Persistencias.PersistenciaCliente;
 import TiposAtributos.CPF;
 import TiposAtributos.Email;
 import TiposAtributos.Endereco;
@@ -11,50 +13,67 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sistema {
-    private static List<Usuario> usuarios = new ArrayList<>();
+    private static List<Cliente> clientes = new ArrayList<>();
+    private static List<Usuario> administradores = new ArrayList<>();
 
-    public static List<Usuario> getUsuarios(){
-        return usuarios;
+    public static List<Usuario> getAdministradores(){
+        return administradores;
+    }
+
+    public static List<Cliente> getClientes(){
+        return clientes;
     }
 
     public static void salvaUsuarios(){
-        Persistencia.salvarUsuarios(usuarios);
+        PersistenciaAdm.salvarAdms(administradores);
+        PersistenciaCliente.salvarClientes(clientes);
     }
 
     public static void carregarUsuarios() {
-        usuarios = Persistencia.carregarUsuarios();
+        administradores = PersistenciaAdm.carregarAdms();
+        clientes = PersistenciaCliente.carregarClientes();
     }
 
-    public static Usuario logarUsuario(String cpf, String senha){
-        for (Usuario usuario : Sistema.usuarios) {
-            if(usuario.getCpfString().equals(cpf) && usuario.getSenha().equals(senha))
-                return usuario;
-            else
-                return null;
+    public static Cliente logarCliente(String cpf, String senha){
+        for (Cliente cliente : Sistema.clientes) {
+            if(cliente.getCpfString().equals(cpf) && cliente.verificaSenha(senha))
+                return cliente;
         }
         return null;
     }
 
-    public static void criarUsuario(String nome, String dataNascimento, CPF cpf, Endereco endereco, Telefone telefone, Email email, String senha){
+    public static Usuario logarAdm(String userId, String senha){
+        for (Usuario adm : Sistema.administradores) {
+            if(adm.getUserID().equals(userId) && adm.verificaSenha(senha))
+                return adm;
+        }
+        return null;
+    }
 
-        String tipoUsuario = "";
+    public static void criarUsuario(String nome, String dataNascimento, CPF cpf, Endereco endereco, Telefone telefone, Email email, String senha, String tipoUsuario){
 
         switch (tipoUsuario){
             case "Gerente":
-                usuarios.add(new Gerente( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
+                administradores.add(new Gerente( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
+                PersistenciaAdm.salvarAdms(administradores);
                 break;
             case "Caixa":
-                usuarios.add(new Caixa( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
+                administradores.add(new Caixa( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
+                PersistenciaAdm.salvarAdms(administradores);
+                break;
+            case "Cliente":
+                clientes.add( new Cliente( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
+                PersistenciaCliente.salvarClientes(clientes);
                 break;
             default:
-                usuarios.add(new Cliente( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
+                System.err.println("Tipo de usuário desconhecido.");
                 break;
         }
 
-        Persistencia.salvarUsuarios(usuarios);
     };
 
-    void removerUsuario(Usuario usuario){
+    void removerUsuario(Cliente usuario){
+        clientes.remove(usuario);
     };
 
     void editarUsuario(Usuario usuario){

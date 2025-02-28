@@ -1,10 +1,10 @@
 package Frames;
 
 import Usuarios.Cliente;
-import Usuarios.Persistencia;
-import Usuarios.Sistema;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -32,9 +32,6 @@ public class MenuCliente extends JFrame{
         setContentPane(ClientePanel);
         nomeUsuario.setText(usuarioLogado.getNome());
         atualizaSaldoView(usuarioLogado);
-        Persistencia.salvarUsuarios(Sistema.getUsuarios());
-        System.out.println(usuarioLogado.getSaldoString());
-        System.out.println(usuarioLogado.getSaldo());
 
         SaldoCheckBox.addItemListener(new ItemListener() {
             @Override
@@ -48,10 +45,38 @@ public class MenuCliente extends JFrame{
                 }
             }
         });
+        botaoSair.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int sair = JOptionPane.showConfirmDialog(null,"Deseja sair?","Desconectar",2);
+                if(sair == 0){
+                    dispose();
+                    SwingUtilities.invokeLater(() -> {
+                        new LoginFrame().setVisible(true);
+                    });
+                }
+            }
+        });
+        botaoTransferir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    new TransferenciaDestinoFrame(usuarioLogado).setVisible(true);
+                });
+            }
+        });
+
+        Timer timer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                atualizaSaldoView(usuarioLogado);
+            }
+        });
+        timer.start();
     }
 
     private void atualizaSaldoView(Cliente usuarioLogado){
-        saldoUsuario.setText(usuarioLogado.getSaldoString());
-        }
+        saldoUsuario.setText("Saldo: " + usuarioLogado.getSaldoString());
+    }
 
 };

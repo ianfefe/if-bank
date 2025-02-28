@@ -11,22 +11,21 @@
     </properties>
     <border type="none" title="Login"/>
     <children>
-      <component id="3d2ea" class="javax.swing.JFormattedTextField" binding="campoUsuario">
+      <component id="c56bc" class="javax.swing.JButton" binding="botaoCadastro">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value=""/>
+          <text value="Registre-se"/>
         </properties>
       </component>
-      <component id="346b3" class="javax.swing.JLabel" binding="usuario">
+      <component id="9a7be" class="javax.swing.JButton" binding="botaoLogin">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Usuário"/>
+          <hideActionText value="false"/>
+          <text value="Login"/>
         </properties>
       </component>
       <component id="449fc" class="javax.swing.JPasswordField" binding="campoSenha">
@@ -46,21 +45,22 @@
           <text value="Senha"/>
         </properties>
       </component>
-      <component id="c56bc" class="javax.swing.JButton" binding="botaoCadastro">
+      <component id="3d2ea" class="javax.swing.JFormattedTextField" binding="campoUsuario">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
         </constraints>
         <properties>
-          <text value="Registre-se"/>
+          <text value=""/>
         </properties>
       </component>
-      <component id="9a7be" class="javax.swing.JButton" binding="botaoLogin">
+      <component id="346b3" class="javax.swing.JLabel" binding="usuario">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <hideActionText value="false"/>
-          <text value="Login"/>
+          <text value="Usuário"/>
         </properties>
       </component>
     </children>

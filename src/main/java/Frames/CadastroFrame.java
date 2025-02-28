@@ -72,7 +72,8 @@ public class CadastroFrame extends JFrame{
                             new Endereco(campoRua.getText(),campoNumeroEndereco.getText(),(String)complementoBox.getSelectedItem()),
                             new Telefone(campoTelefone.getText()),
                             new Email(campoEmail.getText()),
-                            new String(campoSenha.getPassword()));
+                            new String(campoSenha.getPassword()),
+                            "Cliente");
 
                     dispose();
                     SwingUtilities.invokeLater(() -> {

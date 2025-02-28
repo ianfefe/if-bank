@@ -15,6 +15,7 @@ public class Caixa extends Usuario{
                  Email email,
                  String senha) {
         super(nome,dataNascimento,cpf,endereco,telefone,email,senha);
+        userID = (id++) + "C";
         tipoUsuario = "Caixa";
     }
 }

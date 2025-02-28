@@ -3,7 +3,6 @@ package Frames;
 import Usuarios.*;
 
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,9 +11,9 @@ public class LoginFrame extends JFrame{
     private JPasswordField campoSenha;
     private JButton botaoLogin;
     private JButton botaoCadastro;
+    private JPanel loginPanel;
     private JLabel usuario;
     private JLabel senha;
-    private JPanel loginPanel;
 
     public LoginFrame() {
 
@@ -22,32 +21,32 @@ public class LoginFrame extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setContentPane(loginPanel);
-        aplicaMascaraUsuario();
 
         botaoLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Usuario usuarioLogado = Sistema.logarUsuario(campoUsuario.getText(),new String(campoSenha.getPassword()));
 
-                if (usuarioLogado != null){
-                    switch (usuarioLogado.getTipo()){
-                        case "Cliente":
-                            dispose();
-                            new MenuCliente((Cliente) usuarioLogado).setVisible(true);
-                            break;
-                        case "Caixas":
-                            dispose();
-                            new MenuCaixa((Caixa) usuarioLogado).setVisible(true);
-                            break;
-                        case "Gerente":
-                            dispose();
-                            new MenuGerente((Gerente) usuarioLogado).setVisible(true);
-                            break;
-                        default:
-                            throw new RuntimeException("Tipo de usuário desconhecido");
+                validarCampos(e);
+
+                if(getTipoUsuario().equals("Cliente")){
+                    Cliente usuarioLogado = Sistema.logarCliente(formataUsuarioCliente(),new String(campoSenha.getPassword()));
+                    if(usuarioLogado == null){
+                        JOptionPane.showMessageDialog(null,"Usuário não encontrado", "Login mal sucedido",JOptionPane.ERROR_MESSAGE);
+                        return;
                     }
+                    dispose();
+                    new MenuCliente(usuarioLogado).setVisible(true);
                 }else{
-                    JOptionPane.showMessageDialog(null,"Usuário e/ou senha incorretos.");
+                    Usuario usuarioLogado = Sistema.logarAdm(campoUsuario.getText(),new String(campoSenha.getPassword()));
+                    if(usuarioLogado == null){
+                        JOptionPane.showMessageDialog(null,"Usuário não encontrado", "Login mal sucedido",JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if(usuarioLogado.getTipoUsuario().equals("Caixa"))
+                        new MenuCaixa(usuarioLogado).setVisible(true);
+                    else
+                        new MenuGerente(usuarioLogado).setVisible(true);
+                    dispose();
                 }
             }
         });
@@ -61,16 +60,36 @@ public class LoginFrame extends JFrame{
         });
     }
 
-        private void aplicaMascaraUsuario() {
-            try {
-                MaskFormatter formataUsuario = new MaskFormatter("###.###.###-##");
-                formataUsuario.setPlaceholderCharacter('_');
+    private String formataUsuarioCliente(){
+        String parte1 = campoUsuario.getText().substring(0, 3);
+        String parte2 = campoUsuario.getText().substring(3, 6);
+        String parte3 = campoUsuario.getText().substring(6, 9);
+        String parte4 = campoUsuario.getText().substring(9, 11);
 
-                campoUsuario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(formataUsuario));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        return parte1 + "." + parte2 + "." + parte3 + "-" + parte4;
+    }
+
+    private String getTipoUsuario(){
+        if(campoUsuario.getText().matches("^[0-9]{11}$")){
+            return "Cliente";
+        }else{
+            return "Administrador";
         }
+    }
+
+    private void validarCampos(ActionEvent e) {
+
+        boolean todosPreenchidos = true;
+
+        if (campoUsuario.getText().isBlank())
+            todosPreenchidos = false;
+
+        if (new String(campoSenha.getPassword()).isBlank())
+            todosPreenchidos = false;
+
+        if(!todosPreenchidos)
+            JOptionPane.showMessageDialog(null,"Todos os campos são obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

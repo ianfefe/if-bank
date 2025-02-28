@@ -5,12 +5,13 @@ import TiposAtributos.Email;
 import TiposAtributos.Endereco;
 import TiposAtributos.Telefone;
 
+import javax.swing.*;
 import java.util.Objects;
 
 public class Usuario {
     protected static int id = 0;
 
-    protected int userID;
+    protected String userID;
     protected String nome;
     protected String dataNascimento;
     protected CPF cpf;
@@ -28,7 +29,7 @@ public class Usuario {
                     Email email,
                     String senha){
 
-        this.userID = id++;
+        this.userID = String.valueOf(id++);
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
@@ -41,6 +42,14 @@ public class Usuario {
 
     public String getNome(){
         return this.nome;
+    }
+
+    public String getUserID(){
+        return this.userID;
+    }
+
+    public String getTipoUsuario(){
+        return this.tipoUsuario;
     }
 
     public String getDataNascimento(){ return this.dataNascimento;}
@@ -69,15 +78,25 @@ public class Usuario {
         return this.senha;
     }
 
-    public String getTipo(){
-        return this.tipoUsuario;
+    public boolean verificaSenha(String senha)
+    {
+        return this.senha.equals(senha);
     }
 
-    void transferir(Cliente origem, Cliente destino, double valor){
+    public void transferir(Cliente origem, Cliente destino, double valor){
         Objects.requireNonNull(origem, "Conta de origem não encontrada.");
         Objects.requireNonNull(destino, "Conta de destino não encontrada.");
+        if(destino.getCpfString().equals(origem.getCpfString())){
+            JOptionPane.showMessageDialog(null,"Não é possível transferir para a própria conta.", "", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         origem.confirmarSaldo(valor);
-        origem.sacar(valor);
-        destino.depositarSaldo(this,valor);
+        if(origem.confirmaSenha()){
+            origem.sacar(valor);
+            destino.depositarSaldo(this,valor);
+            JOptionPane.showMessageDialog(null,"Transferência concluída com sucesso.");
+        }else{
+            JOptionPane.showMessageDialog(null,"Senha incorreta, cancelando operação.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

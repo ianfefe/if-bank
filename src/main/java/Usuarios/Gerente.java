@@ -14,6 +14,7 @@ public class Gerente extends Usuario{
                    Email email,
                    String senha) {
         super(nome,dataNascimento,cpf,endereco,telefone,email,senha);
+        userID = (id++) + "G";
         tipoUsuario = "Gerente";
     }
 
