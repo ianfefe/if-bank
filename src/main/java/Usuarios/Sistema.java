@@ -1,7 +1,8 @@
 package Usuarios;
 
 import Frames.LoginFrame;
-import Persistencias.PersistenciaAdm;
+import Persistencias.PersistenciaCaixa;
+import Persistencias.PersistenciaGerente;
 import Persistencias.PersistenciaCliente;
 import TiposAtributos.CPF;
 import TiposAtributos.Email;
@@ -11,26 +12,26 @@ import TiposAtributos.Telefone;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Sistema {
     private static List<Cliente> clientes = new ArrayList<>();
-    private static List<Usuario> administradores = new ArrayList<>();
-
-    public static List<Usuario> getAdministradores(){
-        return administradores;
-    }
+    private static List<Caixa> caixas = new ArrayList<>();
+    private static List<Gerente> gerentes = new ArrayList<>();
 
     public static List<Cliente> getClientes(){
         return clientes;
     }
 
     public static void salvaUsuarios(){
-        PersistenciaAdm.salvarAdms(administradores);
+        PersistenciaCaixa.salvarAdms(caixas);
+        PersistenciaGerente.salvarAdms(gerentes);
         PersistenciaCliente.salvarClientes(clientes);
     }
 
     public static void carregarUsuarios() {
-        administradores = PersistenciaAdm.carregarAdms();
+        caixas = PersistenciaCaixa.carregarAdms();
+        gerentes = PersistenciaGerente.carregarAdms();
         clientes = PersistenciaCliente.carregarClientes();
     }
 
@@ -42,10 +43,17 @@ public class Sistema {
         return null;
     }
 
-    public static Usuario logarAdm(String userId, String senha){
-        for (Usuario adm : Sistema.administradores) {
-            if(adm.getUserID().equals(userId) && adm.verificaSenha(senha))
-                return adm;
+    public static Object logarAdm(String userId, String senha){
+        if(userId.matches("^[0-9]+C$")){
+            for (Caixa adm : Sistema.caixas) {
+                if(adm.getUserID().equals(userId) && adm.verificaSenha(senha))
+                    return adm;
+            }
+        }else {
+            for (Gerente adm : Sistema.gerentes) {
+                if(adm.getUserID().equals(userId) && adm.verificaSenha(senha))
+                    return adm;
+            }
         }
         return null;
     }
@@ -54,12 +62,12 @@ public class Sistema {
 
         switch (tipoUsuario){
             case "Gerente":
-                administradores.add(new Gerente( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
-                PersistenciaAdm.salvarAdms(administradores);
+                gerentes.add(new Gerente( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
+                PersistenciaGerente.salvarAdms(gerentes);
                 break;
             case "Caixa":
-                administradores.add(new Caixa( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
-                PersistenciaAdm.salvarAdms(administradores);
+                caixas.add(new Caixa( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
+                PersistenciaCaixa.salvarAdms(caixas);
                 break;
             case "Cliente":
                 clientes.add( new Cliente( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));

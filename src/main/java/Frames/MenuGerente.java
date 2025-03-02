@@ -1,5 +1,6 @@
 package Frames;
 
+import Usuarios.Gerente;
 import Usuarios.Usuario;
 
 import javax.swing.*;
@@ -19,30 +20,18 @@ public class MenuGerente extends JFrame{
     private JTabbedPane tabbedPane3;
     private JTabbedPane tabbedPane5;
     private JTabbedPane tabbedPane6;
-    private JTable table1;
     private JButton botaoSair;
-    private JPanel consultasAba;
     private JPanel transferenciasAba;
 
-    public MenuGerente(Usuario usuarioLogado) {
+    public MenuGerente(Gerente usuarioLogado) {
         setSize(900,600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setContentPane(gerentePanel);
         nomeUsuario.setText(usuarioLogado.getNome());
+        Utility.adicionaOpcaoDeslogarUsuario(botaoSair,this);
 
-        botaoSair.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int sair = JOptionPane.showConfirmDialog(null,"Deseja sair?","Desconectar",2);
-                if(sair == 0){
-                    dispose();
-                    SwingUtilities.invokeLater(() -> {
-                        new LoginFrame().setVisible(true);
-                    });
-                }
-            }
-        });
+
         botaoTransferir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,5 +41,22 @@ public class MenuGerente extends JFrame{
             }
         });
 
+        botaoSaque.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    new SaqueFrame(usuarioLogado).setVisible(true);
+                });
+            }
+        });
+
+        botaoDeposito.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    new DepositoFrame(usuarioLogado).setVisible(true);
+                });
+            }
+        });
     }
 }

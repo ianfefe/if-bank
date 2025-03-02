@@ -1,5 +1,6 @@
 package Frames;
 
+import Usuarios.Caixa;
 import Usuarios.Usuario;
 
 import javax.swing.*;
@@ -17,30 +18,37 @@ public class MenuCaixa extends JFrame {
     private JPanel caixaPanel;
     private JPanel transferenciasBotoesPanel;
 
-    public MenuCaixa(Usuario usuarioLogado) {
+    public MenuCaixa(Caixa usuarioLogado) {
         setSize(900,600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setContentPane(caixaPanel);
         nomeUsuario.setText(usuarioLogado.getNome());
+        Utility.adicionaOpcaoDeslogarUsuario(botaoSair,this);
 
-        botaoSair.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int sair = JOptionPane.showConfirmDialog(null,"Deseja sair?","Desconectar",2);
-                if(sair == 0){
-                    dispose();
-                    SwingUtilities.invokeLater(() -> {
-                        new LoginFrame().setVisible(true);
-                    });
-                }
-            }
-        });
         botaoTransferir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SwingUtilities.invokeLater(() -> {
                     new TransferenciaCompletaFrame().setVisible(true);
+                });
+            }
+        });
+
+        botaoSaque.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    new SaqueFrame(usuarioLogado).setVisible(true);
+                });
+            }
+        });
+
+        botaoDeposito.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    new DepositoFrame(usuarioLogado).setVisible(true);
                 });
             }
         });

@@ -47,20 +47,14 @@ public class Cliente extends Usuario{
         }
     }
 
-    void sacar(double valor){
+    protected void sacar(double valor){
         confirmarSaldo(valor);
-        //confirmarSenha();
         this.saldo -= valor;
         Sistema.salvaUsuarios();
     }
 
-    void depositarSaldo(Usuario usuario,double valor){
-//        if(usuario instanceof Caixa || usuario instanceof Gerente){
-            this.saldo += valor;
-//        }else{
-//            throw new RuntimeException("Apenas administradores podem acessar este recurso.");
-//        }
-
+    protected void depositar(double valor){
+        this.saldo += valor;
         Sistema.salvaUsuarios();
     }
 

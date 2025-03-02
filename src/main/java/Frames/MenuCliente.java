@@ -14,12 +14,10 @@ public class MenuCliente extends JFrame{
     private JButton botaoConfiguracoes;
     private JCheckBox SaldoCheckBox;
     private JScrollBar scrollBar1;
-    private JScrollBar scrollBar3;
     private JPanel ClientePanel;
     private JTabbedPane menuPanel;
     private JTabbedPane abaInvestimento;
     private JPanel abaExtrato;
-    private JPanel abaNotificacoes;
     private JTabbedPane abaRendaVariavel;
     private JPanel abaRendaFixa;
     private JButton botaoTransferir;
@@ -27,11 +25,12 @@ public class MenuCliente extends JFrame{
 
     MenuCliente(Cliente usuarioLogado){
         setSize(900,600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setContentPane(ClientePanel);
         nomeUsuario.setText(usuarioLogado.getNome());
         atualizaSaldoView(usuarioLogado);
+        Utility.adicionaOpcaoDeslogarUsuario(botaoSair,this);
 
         SaldoCheckBox.addItemListener(new ItemListener() {
             @Override
@@ -45,18 +44,7 @@ public class MenuCliente extends JFrame{
                 }
             }
         });
-        botaoSair.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int sair = JOptionPane.showConfirmDialog(null,"Deseja sair?","Desconectar",2);
-                if(sair == 0){
-                    dispose();
-                    SwingUtilities.invokeLater(() -> {
-                        new LoginFrame().setVisible(true);
-                    });
-                }
-            }
-        });
+
         botaoTransferir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -76,7 +64,7 @@ public class MenuCliente extends JFrame{
     }
 
     private void atualizaSaldoView(Cliente usuarioLogado){
-        saldoUsuario.setText("Saldo: " + usuarioLogado.getSaldoString());
+        saldoUsuario.setText("Saldo: R$" + usuarioLogado.getSaldoString());
     }
 
 };

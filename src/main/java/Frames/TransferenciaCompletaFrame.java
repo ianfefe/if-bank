@@ -1,12 +1,12 @@
 package Frames;
 
 import Usuarios.Cliente;
-import Usuarios.Sistema;
 
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class TransferenciaCompletaFrame extends JFrame {
     private JFormattedTextField campoOrigem;
@@ -21,39 +21,27 @@ public class TransferenciaCompletaFrame extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(transferenciaCompletaPanel);
-        aplicaMascaraCpf();
+        Utility.aplicaMascaraCpf(campoOrigem);
+        Utility.aplicaMascaraCpf(campoDestino);
 
 
         botaoTransferir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Cliente origem = encontraCliente(campoOrigem.getText());
-                Cliente destino = encontraCliente(campoDestino.getText());
-                origem.transferir(origem, destino, Double.parseDouble(String.valueOf(campoValor.getText())));
+                Cliente origem = Utility.encontraCliente(campoOrigem.getText());
+                Cliente destino = Utility.encontraCliente(campoDestino.getText());
+                double valor = Utility.confereValorDouble(campoValor);
+                origem.transferir(origem, destino, valor);
                 dispose();
             }
         });
 
-    }
-
-    private Cliente encontraCliente(String cpf) {
-        for (Cliente cliente : Sistema.getClientes()) {
-            if (cliente.getCpfString().equals(cpf)) {
-                return cliente;
+        campoValor.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                Utility.formataValor(campoValor);
             }
-        }
-        throw new RuntimeException("Conta destino nao encontrada");
-    }
+        });
 
-    private void aplicaMascaraCpf() {
-        try {
-            MaskFormatter formataCpf = new MaskFormatter("###.###.###-##");
-            formataCpf.setPlaceholderCharacter('_');
-
-            campoOrigem.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(formataCpf));
-            campoDestino.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(formataCpf));
-        } catch (Exception e) {
-            System.err.println("Formato de CPF inválido");
-        }
     }
 }

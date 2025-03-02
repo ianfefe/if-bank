@@ -84,19 +84,30 @@ public class Usuario {
     }
 
     public void transferir(Cliente origem, Cliente destino, double valor){
-        Objects.requireNonNull(origem, "Conta de origem não encontrada.");
-        Objects.requireNonNull(destino, "Conta de destino não encontrada.");
-        if(destino.getCpfString().equals(origem.getCpfString())){
-            JOptionPane.showMessageDialog(null,"Não é possível transferir para a própria conta.", "", JOptionPane.ERROR_MESSAGE);
-            return;
+        if(confirmaValor(valor)){
+            Objects.requireNonNull(origem, "Conta de origem não encontrada.");
+            Objects.requireNonNull(destino, "Conta de destino não encontrada.");
+            if(destino.getCpfString().equals(origem.getCpfString())){
+                JOptionPane.showMessageDialog(null,"Não é possível transferir para a própria conta.", "", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            origem.confirmarSaldo(valor);
+            if(origem.confirmaSenha()){
+                origem.sacar(valor);
+                destino.depositar(valor);
+                JOptionPane.showMessageDialog(null,"Transferência concluída com sucesso.");
+            }else{
+                JOptionPane.showMessageDialog(null,"Senha incorreta, cancelando operação.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         }
-        origem.confirmarSaldo(valor);
-        if(origem.confirmaSenha()){
-            origem.sacar(valor);
-            destino.depositarSaldo(this,valor);
-            JOptionPane.showMessageDialog(null,"Transferência concluída com sucesso.");
+    }
+
+    protected boolean confirmaValor(double valor){
+        if(valor > 0){
+            return true;
         }else{
-            JOptionPane.showMessageDialog(null,"Senha incorreta, cancelando operação.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Valor não aceito","Valor inválido", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 }

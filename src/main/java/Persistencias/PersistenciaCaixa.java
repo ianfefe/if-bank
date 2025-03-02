@@ -1,6 +1,6 @@
 package Persistencias;
 
-import Usuarios.Usuario;
+import Usuarios.Caixa;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -12,10 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersistenciaAdm {
-    private static final String ARQUIVO_JSON = "admins.json";
+public class PersistenciaCaixa {
+    private static final String ARQUIVO_JSON = "caixas.json";
 
-    public static void salvarAdms(List<Usuario> admins) {
+    public static void salvarAdms(List<Caixa> admins) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();;
 
         try (FileWriter writer = new FileWriter(ARQUIVO_JSON)) {
@@ -25,11 +25,11 @@ public class PersistenciaAdm {
         }
     }
 
-    public static List<Usuario> carregarAdms() {
+    public static List<Caixa> carregarAdms() {
         Gson gson = new Gson();
 
         try (FileReader reader = new FileReader(ARQUIVO_JSON)) {
-            return gson.fromJson(reader, new TypeToken<List<Usuario>>() {}.getType());
+            return gson.fromJson(reader, new TypeToken<List<Caixa>>() {}.getType());
         }
         catch (FileNotFoundException e) {
             System.out.println("Arquivo não encontrado. Criando novo arquivo...");

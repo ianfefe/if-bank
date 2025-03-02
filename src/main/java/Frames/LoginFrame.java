@@ -3,6 +3,7 @@ package Frames;
 import Usuarios.*;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -37,15 +38,15 @@ public class LoginFrame extends JFrame{
                     dispose();
                     new MenuCliente(usuarioLogado).setVisible(true);
                 }else{
-                    Usuario usuarioLogado = Sistema.logarAdm(campoUsuario.getText(),new String(campoSenha.getPassword()));
+                    Object usuarioLogado = Sistema.logarAdm(campoUsuario.getText(),new String(campoSenha.getPassword()));
                     if(usuarioLogado == null){
                         JOptionPane.showMessageDialog(null,"Usuário não encontrado", "Login mal sucedido",JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    if(usuarioLogado.getTipoUsuario().equals("Caixa"))
-                        new MenuCaixa(usuarioLogado).setVisible(true);
+                    if(usuarioLogado instanceof Caixa)
+                        new MenuCaixa((Caixa) usuarioLogado).setVisible(true);
                     else
-                        new MenuGerente(usuarioLogado).setVisible(true);
+                        new MenuGerente((Gerente) usuarioLogado).setVisible(true);
                     dispose();
                 }
             }

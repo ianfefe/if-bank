@@ -5,7 +5,9 @@ import TiposAtributos.Email;
 import TiposAtributos.Endereco;
 import TiposAtributos.Telefone;
 
-public class Caixa extends Usuario{
+import javax.swing.*;
+
+public class Caixa extends Usuario implements Administrador{
 
     public Caixa(String nome,
                  String dataNascimento,
@@ -18,4 +20,26 @@ public class Caixa extends Usuario{
         userID = (id++) + "C";
         tipoUsuario = "Caixa";
     }
+
+    @Override
+    public void realizarSaque(Cliente origem, double valor) {
+        origem.confirmarSaldo(valor);
+        if(confirmaValor(valor)){
+            if(valor<1000000 && origem.confirmaSenha()){
+                origem.sacar(valor);
+                JOptionPane.showMessageDialog(null,"Saque concluído com sucesso.");
+            }else{
+                JOptionPane.showMessageDialog(null,"Senha incorreta, cancelando operação.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    @Override
+    public void realizarDeposito(Cliente destino ,double valor) {
+        if(confirmaValor(valor)){
+            destino.depositar(valor);
+            JOptionPane.showMessageDialog(null, "Depósito concluído com sucesso.");
+        }
+    }
+
 }

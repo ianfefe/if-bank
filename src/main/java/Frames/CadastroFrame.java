@@ -41,7 +41,7 @@ public class CadastroFrame extends JFrame{
     public CadastroFrame() {
 
         setSize(900,600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setContentPane(cadastroPanel);
         aplicarMascarasTexto();
@@ -140,17 +140,6 @@ public class CadastroFrame extends JFrame{
 
     }
 
-    private void aplicaMascaraCpf() {
-        try {
-            MaskFormatter formataCpf = new MaskFormatter("###.###.###-##");
-            formataCpf.setPlaceholderCharacter('_');
-
-            campoCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(formataCpf));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void aplicaMascaraDataNascimento() {
         try {
             MaskFormatter formataNascimento = new MaskFormatter("##/##/####");
@@ -174,7 +163,7 @@ public class CadastroFrame extends JFrame{
     }
 
     private void aplicarMascarasTexto(){
-        aplicaMascaraCpf();
+        Utility.aplicaMascaraCpf(campoCPF);
         aplicaMascaraDataNascimento();
         aplicaMascaraTelefone();
     }
