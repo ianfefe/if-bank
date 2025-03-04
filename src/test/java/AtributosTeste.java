@@ -15,7 +15,7 @@ public class AtributosTeste {
                 () -> new CPF("12345678910")
         );
 
-        assertEquals("CPF inválido", cpfInvalido.getMessage());
+        assertEquals("CPF inválido.", cpfInvalido.getMessage());
     }
 
     @Test

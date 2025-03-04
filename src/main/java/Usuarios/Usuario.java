@@ -84,15 +84,15 @@ public class Usuario {
     public void transferir(Cliente origem, Cliente destino, double valor) {
         if (confirmaValor(valor)) {
             Objects.requireNonNull(origem, "Conta de origem não encontrada.");
-            Objects.requireNonNull(destino, "Conta de destino não encontrada.");
+            Objects.requireNonNull(destino, "Conta destino não encontrada.");
             if (destino.getCpfString().equals(origem.getCpfString())) {
                 JOptionPane.showMessageDialog(null, "Não é possível transferir para a própria conta.", "", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             origem.confirmarSaldo(valor);
             if (origem.confirmaSenha()) {
-                origem.sacar(valor);
-                destino.depositar(valor);
+                origem.sacar(valor, "Transferência: ");
+                destino.depositar(valor, "Transferência: ");
                 JOptionPane.showMessageDialog(null, "Transferência concluída com sucesso.");
             } else {
                 JOptionPane.showMessageDialog(null, "Senha incorreta, cancelando operação.", "Erro", JOptionPane.ERROR_MESSAGE);

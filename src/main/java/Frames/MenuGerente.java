@@ -21,6 +21,7 @@ public class MenuGerente extends JFrame {
     private JTabbedPane tabbedPane6;
     private JButton botaoSair;
     private JPanel transferenciasAba;
+    private JTable table1;
 
     public MenuGerente(Gerente usuarioLogado) {
         setSize(900, 600);

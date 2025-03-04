@@ -34,7 +34,7 @@ public class Gerente extends Usuario implements Administrador {
         origem.confirmarSaldo(valor);
         if (confirmaValor(valor)) {
             if (origem.confirmaSenha()) {
-                origem.sacar(valor);
+                origem.sacar(valor, "Saque: ");
                 JOptionPane.showMessageDialog(null, "Saque concluído com sucesso.");
             } else {
                 JOptionPane.showMessageDialog(null, "Senha incorreta, cancelando operação.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -45,7 +45,7 @@ public class Gerente extends Usuario implements Administrador {
     @Override
     public void realizarDeposito(Cliente destino, double valor) {
         if (confirmaValor(valor)) {
-            destino.depositar(valor);
+            destino.depositar(valor, "Depósito: ");
             JOptionPane.showMessageDialog(null, "Depósito concluído com sucesso.");
         }
     }

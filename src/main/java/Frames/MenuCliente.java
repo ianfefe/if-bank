@@ -36,6 +36,7 @@ public class MenuCliente extends JFrame {
         setContentPane(ClientePanel);
         nomeUsuario.setText(usuarioLogado.getNome());
         Utility.adicionaOpcaoDeslogarUsuario(botaoSair, this);
+        atualizaSaldoView(usuarioLogado);
 
         SaldoCheckBox.addItemListener(new ItemListener() {
             @Override
@@ -77,9 +78,9 @@ public class MenuCliente extends JFrame {
 
     private void desenhaListaEntrada(Cliente usuarioLogado){
         DefaultListModel<String> extratoEntrada = new DefaultListModel<>();
-        for (Double entrada : usuarioLogado.getEntrada()) {
+        for (String entrada : usuarioLogado.getEntrada()) {
             if (entrada != null) {
-                extratoEntrada.addElement("R$ " + String.format("%.2f", entrada));
+                extratoEntrada.addElement(entrada);
             } else {
                 break;
             }
@@ -91,9 +92,9 @@ public class MenuCliente extends JFrame {
 
     private void desenhaListaSaida(Cliente usuarioLogado){
         DefaultListModel<String> extratoSaida = new DefaultListModel<>();
-        for (Double entrada : usuarioLogado.getSaida()) {
-            if (entrada != null) {
-                extratoSaida.addElement("R$ " + String.format("%.2f", entrada));
+        for (String saida : usuarioLogado.getSaida()) {
+            if (saida != null) {
+                extratoSaida.addElement(saida);
             } else {
                 break;
             }

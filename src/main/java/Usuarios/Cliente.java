@@ -29,23 +29,23 @@ public class Cliente extends Usuario {
 
     void confirmarSaldo(double valor) {
         if (this.getSaldo() < valor) {
-            throw new RuntimeException("Saldo insuficiente");
+            throw new RuntimeException("Saldo insuficiente.");
         } else if (this.getSaldo() == 0) {
-            throw new RuntimeException("Não pode fazer transferências sem valor");
+            throw new RuntimeException("Não pode fazer transferências sem valor.");
         }
     }
 
-    protected void sacar(double valor) {
+    protected void sacar(double valor, String tipoTransferencia) {
         confirmarSaldo(valor);
         this.saldo -= valor;
         Sistema.salvaUsuarios();
-        extrato.setSaida(valor);
+        extrato.setSaida(valor, tipoTransferencia);
     }
 
-    protected void depositar(double valor) {
+    protected void depositar(double valor, String tipoTransferencia) {
         this.saldo += valor;
         Sistema.salvaUsuarios();
-        extrato.setEntrada(valor);
+        extrato.setEntrada(valor, tipoTransferencia);
     }
 
     boolean confirmaSenha() {
@@ -96,11 +96,11 @@ public class Cliente extends Usuario {
         return String.valueOf(this.saldo);
     }
 
-    public List<Double> getEntrada(){
+    public List<String> getEntrada(){
         return this.extrato.getEntrada();
     }
 
-    public List<Double> getSaida(){
+    public List<String> getSaida(){
         return this.extrato.getSaida();
     }
 }

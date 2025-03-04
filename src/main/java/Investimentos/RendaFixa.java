@@ -14,6 +14,6 @@ public class RendaFixa {
 
         this.resgateMin = resgateMin;
         this.resgateMax = resgateMax;
-        this.rendimento = rendimento;
+        this.rendimento = rendimento/100;
     }
 }

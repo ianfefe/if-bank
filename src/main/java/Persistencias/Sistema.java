@@ -46,7 +46,7 @@ public class Sistema {
                 if (adm.getUserID().equals(userId) && adm.verificaSenha(senha))
                     return adm;
             }
-        } else {
+        } else if(userId.matches("^[0-9]+G$")){
             for (Gerente adm : Sistema.gerentes) {
                 if (adm.getUserID().equals(userId) && adm.verificaSenha(senha))
                     return adm;

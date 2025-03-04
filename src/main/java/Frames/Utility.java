@@ -64,6 +64,7 @@ public class Utility {
             public void actionPerformed(ActionEvent e) {
                 int sair = JOptionPane.showConfirmDialog(null, "Deseja sair?", "Desconectar", 2);
                 if (sair == 0) {
+                    Sistema.salvaUsuarios();
                     tela.dispose();
                     SwingUtilities.invokeLater(() -> {
                         new LoginFrame().setVisible(true);

@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.text.ParseException;
 
 import static Persistencias.Sistema.criarUsuario;
 
@@ -32,7 +34,7 @@ public class CadastroFrame extends JFrame {
     private JFormattedTextField campoDataNascimento;
     private JLabel CPFLabel;
     private JFormattedTextField campoCPF;
-    private JComboBox complementoBox;
+    private JComboBox<String> complementoBox;
     private JButton botaoVoltar;
 
     public CadastroFrame() {
@@ -145,8 +147,8 @@ public class CadastroFrame extends JFrame {
             formataNascimento.setPlaceholderCharacter('_');
 
             campoDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(formataNascimento));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ParseException e) {
+            System.err.println("Erro ao aplicar máscara de CPF. " + e.getMessage());
         }
     }
 
@@ -156,8 +158,8 @@ public class CadastroFrame extends JFrame {
             formataTelefone.setPlaceholderCharacter('_');
 
             campoTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(formataTelefone));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ParseException e) {
+            System.err.println("Erro ao aplicar máscara de Telefone. " + e.getMessage());
         }
     }
 
