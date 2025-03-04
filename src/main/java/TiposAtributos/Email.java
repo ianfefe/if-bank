@@ -26,7 +26,7 @@ public class Email {
     }
 
     public void setEmail(String email) throws EmailException {
-        if(! isEmailValido(email))
+        if (!isEmailValido(email))
             throw new EmailException();
 
         this.email = email;

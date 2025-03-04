@@ -1,18 +1,15 @@
 package Frames;
 
-import TiposAtributos.CPF;
-import TiposAtributos.Email;
-import TiposAtributos.Endereco;
-import TiposAtributos.Telefone;
+import TiposAtributos.*;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static Usuarios.Sistema.criarUsuario;
+import static Persistencias.Sistema.criarUsuario;
 
-public class CadastroFrame extends JFrame{
+public class CadastroFrame extends JFrame {
     private JTextField campoNome;
     private JPasswordField campoSenha;
     private JPasswordField campoSenhaConfirma;
@@ -40,7 +37,7 @@ public class CadastroFrame extends JFrame{
 
     public CadastroFrame() {
 
-        setSize(900,600);
+        setSize(900, 600);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setContentPane(cadastroPanel);
@@ -60,16 +57,16 @@ public class CadastroFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-            String senha = new String(campoSenha.getPassword());
-            String senhaConfirma = new String(campoSenhaConfirma.getPassword());
+                String senha = new String(campoSenha.getPassword());
+                String senhaConfirma = new String(campoSenhaConfirma.getPassword());
 
-                if(senha.equals(senhaConfirma)){
+                if (senha.equals(senhaConfirma)) {
                     validarCampos(e);
                     criarUsuario(
                             campoNome.getText(),
-                            campoDataNascimento.getText(),
+                            new DataDeNascimento(campoDataNascimento.getText()),
                             new CPF(campoCPF.getText()),
-                            new Endereco(campoRua.getText(),campoNumeroEndereco.getText(),(String)complementoBox.getSelectedItem()),
+                            new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem()),
                             new Telefone(campoTelefone.getText()),
                             new Email(campoEmail.getText()),
                             new String(campoSenha.getPassword()),
@@ -80,7 +77,7 @@ public class CadastroFrame extends JFrame{
                         new LoginFrame().setVisible(true);
                     });
 
-                }else {
+                } else {
                     JOptionPane.showMessageDialog(campoSenhaConfirma, "Senha diferente.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -91,38 +88,40 @@ public class CadastroFrame extends JFrame{
 
         boolean todosPreenchidos = true;
 
-        System.out.println(complementoBox.getSelectedItem());
         if (campoNome.getText().isBlank())
             todosPreenchidos = false;
 
-        if (campoDataNascimento.getText().replaceAll("_", "").isBlank())
+        if (campoDataNascimento.getText().replaceAll("_", "").isBlank()) {
             todosPreenchidos = false;
+        } else {
+            new DataDeNascimento(campoDataNascimento.getText());
+        }
 
-        if (campoCPF.getText().replaceAll("_", "").isBlank()){
+        if (campoCPF.getText().replaceAll("_", "").isBlank()) {
             todosPreenchidos = false;
-        }else{
+        } else {
             new CPF(campoCPF.getText());
         }
 
-        if (campoEmail.getText().isBlank()){
+        if (campoEmail.getText().isBlank()) {
             todosPreenchidos = false;
-        }else{
+        } else {
             new Email(campoEmail.getText());
         }
 
-        if (campoTelefone.getText().replaceAll("[_()-]", "").trim().isEmpty()){
+        if (campoTelefone.getText().replaceAll("[_()-]", "").trim().isEmpty()) {
             todosPreenchidos = false;
-        }else{
+        } else {
             new Telefone(campoTelefone.getText());
         }
 
-        if (campoNumeroEndereco.getText().isBlank()){
+        if (campoNumeroEndereco.getText().isBlank()) {
             todosPreenchidos = false;
-        }else{
-            if (campoRua.getText().isBlank()){
+        } else {
+            if (campoRua.getText().isBlank()) {
                 todosPreenchidos = false;
-            }else{
-                new Endereco(campoRua.getText(),campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem());
+            } else {
+                new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem());
             }
         }
 
@@ -132,10 +131,10 @@ public class CadastroFrame extends JFrame{
         if (new String(campoSenhaConfirma.getPassword()).isEmpty())
             todosPreenchidos = false;
 
-        if(todosPreenchidos){
+        if (todosPreenchidos) {
             JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(null,"Todos os campos são obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -162,22 +161,10 @@ public class CadastroFrame extends JFrame{
         }
     }
 
-    private void aplicarMascarasTexto(){
+    private void aplicarMascarasTexto() {
         Utility.aplicaMascaraCpf(campoCPF);
         aplicaMascaraDataNascimento();
         aplicaMascaraTelefone();
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            CadastroFrame teste = new CadastroFrame();
-            teste.setContentPane(teste.cadastroPanel);
-            teste.setSize(900,600);
-            teste.setLocationRelativeTo(null);
-            teste.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            teste.setVisible(true);
-        });
-
     }
 
 }

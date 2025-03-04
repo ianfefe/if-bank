@@ -34,12 +34,10 @@ public class Endereco {
 
     private boolean isComplementoValido(String complemento) {
 
-        switch (complemento){
-            case "Casa", "Estabelecimento", "Apartamento":
-                return true;
-            default:
-                throw new EnderecoException("Complemento inexistente");
-        }
+        return switch (complemento) {
+            case "Casa", "Estabelecimento", "Apartamento" -> true;
+            default -> throw new EnderecoException("Complemento inexistente.");
+        };
     }
 
     public String getRua() {
@@ -55,10 +53,19 @@ public class Endereco {
     }
 
     public void setEndereco(String rua, String numero, String complemento) throws EnderecoException {
-        if(! isRuaValida(rua))
-            if(! isNumeroValido(numero))
-                if(! isComplementoValido(complemento))
-                    throw new EnderecoException();
+        boolean valido = true;
+
+        if (!isRuaValida(rua))
+            valido = false;
+
+        if (!isNumeroValido(numero))
+            valido = false;
+
+        if (!isComplementoValido(complemento))
+            valido = false;
+
+        if(!valido)
+            throw new EnderecoException();
 
         this.complemento = complemento;
         this.numero = numero;

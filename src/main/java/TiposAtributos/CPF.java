@@ -2,7 +2,7 @@ package TiposAtributos;
 
 import Exceptions.CPFException;
 import Usuarios.Cliente;
-import Usuarios.Sistema;
+import Persistencias.Sistema;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,15 +22,15 @@ public class CPF {
     }
 
     public String getCPF() {
-            return cpf;
+        return cpf;
     }
 
     public void setCPF(String cpf) throws CPFException {
-        if(! isCPFValido(cpf))
+        if (!isCPFValido(cpf))
             throw new CPFException();
 
-        for (Cliente cliente : Sistema.getClientes()){
-            if(cliente.getCpfString().equals(cpf)){
+        for (Cliente cliente : Sistema.getClientes()) {
+            if (cliente.getCpfString().equals(cpf)) {
                 throw new CPFException("CPF já cadastrado");
             }
         }

@@ -26,7 +26,7 @@ public class Telefone {
     }
 
     public void setTelefone(String telefone) throws TelefoneException {
-        if(! isTelefoneValido(telefone))
+        if (!isTelefoneValido(telefone))
             throw new TelefoneException();
 
         this.telefone = telefone;

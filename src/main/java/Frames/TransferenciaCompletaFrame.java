@@ -14,6 +14,7 @@ public class TransferenciaCompletaFrame extends JFrame {
     private JTextField campoValor;
     private JButton botaoTransferir;
     private JPanel transferenciaCompletaPanel;
+    private JButton botaoCancelar;
 
     public TransferenciaCompletaFrame() {
 
@@ -23,6 +24,7 @@ public class TransferenciaCompletaFrame extends JFrame {
         setContentPane(transferenciaCompletaPanel);
         Utility.aplicaMascaraCpf(campoOrigem);
         Utility.aplicaMascaraCpf(campoDestino);
+        Utility.adicionaBotaoCancelarOperacao(botaoCancelar,this);
 
 
         botaoTransferir.addActionListener(new ActionListener() {

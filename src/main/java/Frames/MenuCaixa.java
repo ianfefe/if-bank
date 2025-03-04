@@ -1,7 +1,6 @@
 package Frames;
 
 import Usuarios.Caixa;
-import Usuarios.Usuario;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,12 +18,12 @@ public class MenuCaixa extends JFrame {
     private JPanel transferenciasBotoesPanel;
 
     public MenuCaixa(Caixa usuarioLogado) {
-        setSize(900,600);
+        setSize(900, 600);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setContentPane(caixaPanel);
         nomeUsuario.setText(usuarioLogado.getNome());
-        Utility.adicionaOpcaoDeslogarUsuario(botaoSair,this);
+        Utility.adicionaOpcaoDeslogarUsuario(botaoSair, this);
 
         botaoTransferir.addActionListener(new ActionListener() {
             @Override

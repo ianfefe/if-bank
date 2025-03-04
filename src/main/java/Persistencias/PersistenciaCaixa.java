@@ -16,7 +16,7 @@ public class PersistenciaCaixa {
     private static final String ARQUIVO_JSON = "caixas.json";
 
     public static void salvarAdms(List<Caixa> admins) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter writer = new FileWriter(ARQUIVO_JSON)) {
             gson.toJson(admins, writer);
@@ -29,12 +29,11 @@ public class PersistenciaCaixa {
         Gson gson = new Gson();
 
         try (FileReader reader = new FileReader(ARQUIVO_JSON)) {
-            return gson.fromJson(reader, new TypeToken<List<Caixa>>() {}.getType());
-        }
-        catch (FileNotFoundException e) {
+            return gson.fromJson(reader, new TypeToken<List<Caixa>>() {
+            }.getType());
+        } catch (FileNotFoundException e) {
             System.out.println("Arquivo não encontrado. Criando novo arquivo...");
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.err.println("Erro ao carregar a lista de administradores: " + e.getMessage());
         }
 

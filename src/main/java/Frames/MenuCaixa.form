@@ -60,7 +60,9 @@
           </grid>
         </constraints>
         <properties/>
-        <border type="none" title="BANK TEST"/>
+        <border type="none" title="IF BANK">
+          <font name="Unispace" size="14"/>
+        </border>
         <children>
           <component id="ef222" class="javax.swing.JLabel" binding="nomeUsuario">
             <constraints/>

@@ -1,13 +1,12 @@
 package Frames;
 
 import Usuarios.Gerente;
-import Usuarios.Usuario;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuGerente extends JFrame{
+public class MenuGerente extends JFrame {
     private JTabbedPane abasPanel;
     private JButton botaoTransferir;
     private JTabbedPane investimentosAba;
@@ -24,13 +23,12 @@ public class MenuGerente extends JFrame{
     private JPanel transferenciasAba;
 
     public MenuGerente(Gerente usuarioLogado) {
-        setSize(900,600);
+        setSize(900, 600);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setContentPane(gerentePanel);
         nomeUsuario.setText(usuarioLogado.getNome());
-        Utility.adicionaOpcaoDeslogarUsuario(botaoSair,this);
-
+        Utility.adicionaOpcaoDeslogarUsuario(botaoSair, this);
 
         botaoTransferir.addActionListener(new ActionListener() {
             @Override

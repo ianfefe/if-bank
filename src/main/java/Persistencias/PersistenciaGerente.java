@@ -1,7 +1,6 @@
 package Persistencias;
 
 import Usuarios.Gerente;
-import Usuarios.Usuario;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -17,7 +16,7 @@ public class PersistenciaGerente {
     private static final String ARQUIVO_JSON = "gerentes.json";
 
     public static void salvarAdms(List<Gerente> admins) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter writer = new FileWriter(ARQUIVO_JSON)) {
             gson.toJson(admins, writer);
@@ -30,12 +29,11 @@ public class PersistenciaGerente {
         Gson gson = new Gson();
 
         try (FileReader reader = new FileReader(ARQUIVO_JSON)) {
-            return gson.fromJson(reader, new TypeToken<List<Gerente>>() {}.getType());
-        }
-        catch (FileNotFoundException e) {
+            return gson.fromJson(reader, new TypeToken<List<Gerente>>() {
+            }.getType());
+        } catch (FileNotFoundException e) {
             System.out.println("Arquivo não encontrado. Criando novo arquivo...");
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.err.println("Erro ao carregar a lista de administradores: " + e.getMessage());
         }
 

@@ -1,29 +1,26 @@
-package Usuarios;
+package Persistencias;
 
 import Frames.LoginFrame;
-import Persistencias.PersistenciaCaixa;
-import Persistencias.PersistenciaGerente;
-import Persistencias.PersistenciaCliente;
-import TiposAtributos.CPF;
-import TiposAtributos.Email;
-import TiposAtributos.Endereco;
-import TiposAtributos.Telefone;
+import TiposAtributos.*;
+import Usuarios.Caixa;
+import Usuarios.Cliente;
+import Usuarios.Gerente;
+import Usuarios.Usuario;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Sistema {
     private static List<Cliente> clientes = new ArrayList<>();
     private static List<Caixa> caixas = new ArrayList<>();
     private static List<Gerente> gerentes = new ArrayList<>();
 
-    public static List<Cliente> getClientes(){
+    public static List<Cliente> getClientes() {
         return clientes;
     }
 
-    public static void salvaUsuarios(){
+    public static void salvaUsuarios() {
         PersistenciaCaixa.salvarAdms(caixas);
         PersistenciaGerente.salvarAdms(gerentes);
         PersistenciaCliente.salvarClientes(clientes);
@@ -35,42 +32,42 @@ public class Sistema {
         clientes = PersistenciaCliente.carregarClientes();
     }
 
-    public static Cliente logarCliente(String cpf, String senha){
+    public static Cliente logarCliente(String cpf, String senha) {
         for (Cliente cliente : Sistema.clientes) {
-            if(cliente.getCpfString().equals(cpf) && cliente.verificaSenha(senha))
+            if (cliente.getCpfString().equals(cpf) && cliente.verificaSenha(senha))
                 return cliente;
         }
         return null;
     }
 
-    public static Object logarAdm(String userId, String senha){
-        if(userId.matches("^[0-9]+C$")){
+    public static Object logarAdm(String userId, String senha) {
+        if (userId.matches("^[0-9]+C$")) {
             for (Caixa adm : Sistema.caixas) {
-                if(adm.getUserID().equals(userId) && adm.verificaSenha(senha))
+                if (adm.getUserID().equals(userId) && adm.verificaSenha(senha))
                     return adm;
             }
-        }else {
+        } else {
             for (Gerente adm : Sistema.gerentes) {
-                if(adm.getUserID().equals(userId) && adm.verificaSenha(senha))
+                if (adm.getUserID().equals(userId) && adm.verificaSenha(senha))
                     return adm;
             }
         }
         return null;
     }
 
-    public static void criarUsuario(String nome, String dataNascimento, CPF cpf, Endereco endereco, Telefone telefone, Email email, String senha, String tipoUsuario){
+    public static void criarUsuario(String nome, DataDeNascimento dataNascimento, CPF cpf, Endereco endereco, Telefone telefone, Email email, String senha, String tipoUsuario) {
 
-        switch (tipoUsuario){
+        switch (tipoUsuario) {
             case "Gerente":
-                gerentes.add(new Gerente( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
+                gerentes.add(new Gerente(nome, dataNascimento, cpf, endereco, telefone, email, senha));
                 PersistenciaGerente.salvarAdms(gerentes);
                 break;
             case "Caixa":
-                caixas.add(new Caixa( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
+                caixas.add(new Caixa(nome, dataNascimento, cpf, endereco, telefone, email, senha));
                 PersistenciaCaixa.salvarAdms(caixas);
                 break;
             case "Cliente":
-                clientes.add( new Cliente( nome,dataNascimento,cpf, endereco,  telefone,  email,  senha));
+                clientes.add(new Cliente(nome, dataNascimento, cpf, endereco, telefone, email, senha));
                 PersistenciaCliente.salvarClientes(clientes);
                 break;
             default:
@@ -78,15 +75,9 @@ public class Sistema {
                 break;
         }
 
-    };
+    }
 
-    void removerUsuario(Cliente usuario){
-        clientes.remove(usuario);
-    };
-
-    void editarUsuario(Usuario usuario){
-
-    };
+    ;
 
     public static void main(String[] args) {
 
@@ -95,5 +86,17 @@ public class Sistema {
         SwingUtilities.invokeLater(() -> {
             new LoginFrame().setVisible(true);
         });
+    }
+
+    ;
+
+    void removerUsuario(Cliente usuario) {
+        clientes.remove(usuario);
+    }
+
+    ;
+
+    void editarUsuario(Usuario usuario) {
+
     }
 }

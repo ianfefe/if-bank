@@ -1,61 +1,51 @@
 package Usuarios;
 
-import TiposAtributos.CPF;
-import TiposAtributos.Email;
-import TiposAtributos.Endereco;
-import TiposAtributos.Telefone;
+import Persistencias.Sistema;
+import TiposAtributos.*;
 
 import javax.swing.*;
+import java.util.List;
 
-public class Cliente extends Usuario{
+public class Cliente extends Usuario {
     private double saldo;
+    private Extrato extrato;
 
     public Cliente(String nome,
-                   String dataNascimento,
-                   CPF cpf,
-                   Endereco endereco,
-                   Telefone telefone,
-                   Email email,
-                   String senha,
-                   double saldo) {
-        super(nome,dataNascimento,cpf,endereco,telefone,email,senha);
-        tipoUsuario = "Cliente";
-        this.saldo = 0;
-    }
-
-    public Cliente(String nome,
-                   String dataNascimento,
+                   DataDeNascimento dataNascimento,
                    CPF cpf,
                    Endereco endereco,
                    Telefone telefone,
                    Email email,
                    String senha) {
-        super(nome,dataNascimento,cpf,endereco,telefone,email,senha);
+        super(nome, dataNascimento, cpf, endereco, telefone, email, senha);
         tipoUsuario = "Cliente";
         this.saldo = 0;
+        this.extrato = new Extrato();
     }
 
-    public double getSaldo(){
+    public double getSaldo() {
         return this.saldo;
     }
 
-    void confirmarSaldo(double valor){
-        if(this.getSaldo() < valor){
+    void confirmarSaldo(double valor) {
+        if (this.getSaldo() < valor) {
             throw new RuntimeException("Saldo insuficiente");
-        }else if(this.getSaldo() == 0){
+        } else if (this.getSaldo() == 0) {
             throw new RuntimeException("Não pode fazer transferências sem valor");
         }
     }
 
-    protected void sacar(double valor){
+    protected void sacar(double valor) {
         confirmarSaldo(valor);
         this.saldo -= valor;
         Sistema.salvaUsuarios();
+        extrato.setSaida(valor);
     }
 
-    protected void depositar(double valor){
+    protected void depositar(double valor) {
         this.saldo += valor;
         Sistema.salvaUsuarios();
+        extrato.setEntrada(valor);
     }
 
     boolean confirmaSenha() {
@@ -65,8 +55,8 @@ public class Cliente extends Usuario{
             if (this.verificaSenha(senhatemp)) {
                 return true;
             } else {
-                if(i > 1)
-                    JOptionPane.showMessageDialog(null, "Senha incorreta, tente novamente. \n" + (i-1) + " tentativas restantes");
+                if (i > 1)
+                    JOptionPane.showMessageDialog(null, "Senha incorreta, tente novamente. \n" + (i - 1) + " tentativas restantes");
             }
         }
         return false;
@@ -77,12 +67,12 @@ public class Cliente extends Usuario{
 //        return 1;
 //    }
 
-    void investeFixo(){
+    void investeFixo() {
         //autoriza investimento
         confirmaSenha();
     }
 
-    void investeVariavel(){
+    void investeVariavel() {
         //autoriza investimento
         //confirmarSenha();
     }
@@ -97,11 +87,21 @@ public class Cliente extends Usuario{
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
+                ", tipoUsuario='" + tipoUsuario + '\'' +
+                ", extrato='" + extrato + '\'' +
                 '}';
     }
 
     public String getSaldoString() {
         return String.valueOf(this.saldo);
+    }
+
+    public List<Double> getEntrada(){
+        return this.extrato.getEntrada();
+    }
+
+    public List<Double> getSaida(){
+        return this.extrato.getSaida();
     }
 }
 

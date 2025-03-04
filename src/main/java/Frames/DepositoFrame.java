@@ -1,6 +1,7 @@
 package Frames;
 
-import Usuarios.*;
+import Usuarios.Administrador;
+import Usuarios.Cliente;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -8,18 +9,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class DepositoFrame extends JFrame{
+public class DepositoFrame extends JFrame {
     private JFormattedTextField campoConta;
     private JTextField campoValor;
     private JButton botaoConfirmar;
     private JPanel depositoPanel;
+    private JButton botaoCancelar;
 
-    public DepositoFrame(Administrador usuarioLogado){
+    public DepositoFrame(Administrador usuarioLogado) {
         setSize(400, 250);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(depositoPanel);
         Utility.aplicaMascaraCpf(campoConta);
+        Utility.adicionaBotaoCancelarOperacao(botaoCancelar,this);
 
         botaoConfirmar.addActionListener(new ActionListener() {
             @Override
@@ -27,7 +30,7 @@ public class DepositoFrame extends JFrame{
 
                 double valor = Utility.confereValorDouble(campoValor);
                 Cliente destino = Utility.encontraCliente(campoConta.getText());
-                usuarioLogado.realizarDeposito(destino,valor);
+                usuarioLogado.realizarDeposito(destino, valor);
                 dispose();
             }
         });

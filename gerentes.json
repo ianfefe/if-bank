@@ -1,21 +1,23 @@
 [
   {
     "userID": "1G",
-    "nome": "asdasd",
-    "dataNascimento": "12/31/2313",
+    "nome": "asdaasda",
+    "dataNascimento": {
+      "dataDeNascimento": "11/11/2004"
+    },
     "cpf": {
       "cpf": "111.111.111-11"
     },
     "endereco": {
-      "rua": "asda",
-      "numero": "123123",
+      "rua": "asdasd",
+      "numero": "123",
       "complemento": "Casa"
     },
     "telefone": {
-      "telefone": "(12)3123-1231"
+      "telefone": "(11)1111-1111"
     },
     "email": {
-      "email": "asdad@gmail.com"
+      "email": "asdasd@asdasd.coa"
     },
     "senha": "123",
     "tipoUsuario": "Gerente"
