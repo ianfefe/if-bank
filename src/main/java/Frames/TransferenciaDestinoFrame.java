@@ -22,7 +22,7 @@ public class TransferenciaDestinoFrame extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(transferenciaDestinoPanel);
         Utility.aplicaMascaraCpf(campoDestino);
-        Utility.adicionaBotaoCancelarOperacao(botaoCancelar,this);
+        Utility.adicionaBotaoCancelarOperacao(botaoCancelar, this);
 
         botaoTransferencia.addActionListener(new ActionListener() {
             @Override

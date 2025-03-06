@@ -24,7 +24,7 @@ public class TransferenciaCompletaFrame extends JFrame {
         setContentPane(transferenciaCompletaPanel);
         Utility.aplicaMascaraCpf(campoOrigem);
         Utility.aplicaMascaraCpf(campoDestino);
-        Utility.adicionaBotaoCancelarOperacao(botaoCancelar,this);
+        Utility.adicionaBotaoCancelarOperacao(botaoCancelar, this);
 
 
         botaoTransferir.addActionListener(new ActionListener() {

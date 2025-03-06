@@ -15,7 +15,7 @@ public class Caixa extends Usuario implements Administrador {
                  Email email,
                  String senha) {
         super(nome, dataNascimento, cpf, endereco, telefone, email, senha);
-        userID = (id++) + "C";
+        userID = id + "C";
         tipoUsuario = "Caixa";
     }
 
@@ -24,14 +24,14 @@ public class Caixa extends Usuario implements Administrador {
         Objects.requireNonNull(origem, "Conta de origem não encontrada.");
         origem.confirmarSaldo(valor);
         if (confirmaValor(valor)) {
-            if(valor < 1000000){
+            if (valor < 1000000) {
                 if (origem.confirmaSenha()) {
                     origem.sacar(valor, "Saque: ");
                     JOptionPane.showMessageDialog(null, "Saque concluído com sucesso.");
                 } else {
                     JOptionPane.showMessageDialog(null, "Senha incorreta, cancelando operação.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Para realizar saques maiores que R$1.000.000,00, peça ajuda ao gerente.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }

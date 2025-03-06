@@ -19,7 +19,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="626f7" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="626f7" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Transferências"/>
@@ -29,50 +29,15 @@
             <children>
               <component id="d7b8c" class="javax.swing.JButton" binding="botaoTransferir">
                 <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <font size="18"/>
                   <text value="Transferir"/>
                 </properties>
               </component>
-              <hspacer id="76e7b">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </hspacer>
-              <hspacer id="97145">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </hspacer>
             </children>
           </grid>
-          <tabbedpane id="1d17e" binding="abaInvestimento">
-            <constraints>
-              <tabbedpane title="Investimentos"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <tabbedpane id="f3c8" binding="abaRendaVariavel">
-                <constraints>
-                  <tabbedpane title="Renda variável"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children/>
-              </tabbedpane>
-              <grid id="ebf2c" binding="abaRendaFixa" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
-                <constraints>
-                  <tabbedpane title="Renda fixa"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children/>
-              </grid>
-            </children>
-          </tabbedpane>
           <grid id="b0320" binding="abaExtrato" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
@@ -125,6 +90,80 @@
               </scrollpane>
             </children>
           </grid>
+          <grid id="aba9e" binding="abaInvestimentos" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Investimentos"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="7e596" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <scrollpane id="c5b27">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none" title="Meus investimentos"/>
+                    <children>
+                      <component id="fb9a7" class="javax.swing.JList" binding="listaAplicacoesCliente">
+                        <constraints/>
+                        <properties/>
+                      </component>
+                    </children>
+                  </scrollpane>
+                  <component id="190de" class="javax.swing.JButton" binding="botaoResgatar">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Resgatar"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="748b" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <scrollpane id="778d1">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none" title="Opções para investir"/>
+                    <children>
+                      <component id="f8d73" class="javax.swing.JList" binding="listaInvestimentos">
+                        <constraints/>
+                        <properties>
+                          <font size="16"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </scrollpane>
+                  <component id="3a362" class="javax.swing.JButton" binding="botaoInvestir">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Investir"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </grid>
         </children>
       </tabbedpane>
       <toolbar id="77e95">
@@ -170,10 +209,10 @@
           <hspacer id="4f852">
             <constraints/>
           </hspacer>
-          <component id="1b803" class="javax.swing.JButton" binding="botaoConfiguracoes">
+          <component id="1b803" class="javax.swing.JButton" binding="botaoPerfil">
             <constraints/>
             <properties>
-              <text value="Configurações"/>
+              <text value="Editar perfil"/>
             </properties>
           </component>
           <component id="dbdd7" class="javax.swing.JButton" binding="botaoSair">

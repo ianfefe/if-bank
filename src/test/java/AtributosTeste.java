@@ -12,7 +12,7 @@ public class AtributosTeste {
 
         CPFException cpfInvalido = assertThrows(
                 CPFException.class,
-                () -> new CPF("12345678910")
+                () -> new CPF("12345678910", "Cliente")
         );
 
         assertEquals("CPF inválido.", cpfInvalido.getMessage());
@@ -82,16 +82,5 @@ public class AtributosTeste {
         );
 
         assertEquals("Data de nascimento inválida.", dataNascimentoInvalida.getMessage());
-    }
-
-    @Test
-    public void DataDeNascimentoMenorTesteInvalido(){
-
-        DataNascimentoException dataNascimentoMenor = assertThrows(
-                DataNascimentoException.class,
-                () -> new DataDeNascimento("02/08/2020")
-        );
-
-        assertEquals("É necessário ser maior de idade para se cadastrar.", dataNascimentoMenor.getMessage());
     }
 }

@@ -27,25 +27,28 @@
             <children>
               <component id="72b3" class="javax.swing.JButton" binding="botaoTransferir">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <font size="16"/>
                   <text value="Transferir"/>
                 </properties>
               </component>
               <component id="3068f" class="javax.swing.JButton" binding="botaoSaque">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <font size="16"/>
                   <text value="Saque"/>
                 </properties>
               </component>
               <component id="e6cb0" class="javax.swing.JButton" binding="botaoDeposito">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <font size="16"/>
                   <text value="Depósito"/>
                 </properties>
               </component>
@@ -74,10 +77,10 @@
           <hspacer id="68599">
             <constraints/>
           </hspacer>
-          <component id="2bdcf" class="javax.swing.JButton" binding="botaoConfiguracoes">
+          <component id="2bdcf" class="javax.swing.JButton" binding="botaoPerfil">
             <constraints/>
             <properties>
-              <text value="Configurações"/>
+              <text value="Editar perfil"/>
             </properties>
           </component>
           <component id="21be4" class="javax.swing.JButton" binding="botaoSair">

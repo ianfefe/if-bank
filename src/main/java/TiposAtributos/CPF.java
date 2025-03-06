@@ -1,8 +1,6 @@
 package TiposAtributos;
 
 import Exceptions.CPFException;
-import Usuarios.Cliente;
-import Persistencias.Sistema;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,8 +8,8 @@ import java.util.regex.Pattern;
 public class CPF {
     private String cpf;
 
-    public CPF(String cpf) throws CPFException {
-        setCPF(cpf);
+    public CPF(String cpf, String tipoUsuario) {
+        setCPF(cpf, tipoUsuario);
     }
 
     private boolean isCPFValido(String cpf) {
@@ -25,15 +23,9 @@ public class CPF {
         return cpf;
     }
 
-    public void setCPF(String cpf) throws CPFException {
+    public void setCPF(String cpf, String tipoUsuario) {
         if (!isCPFValido(cpf))
             throw new CPFException();
-
-        for (Cliente cliente : Sistema.getClientes()) {
-            if (cliente.getCpfString().equals(cpf)) {
-                throw new CPFException("CPF já cadastrado");
-            }
-        }
 
         this.cpf = cpf;
     }

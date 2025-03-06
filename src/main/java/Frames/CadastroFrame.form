@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Frames.CadastroFrame">
-  <grid id="27dc6" binding="cadastroPanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="81fd5" binding="cadastroPanel" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="900" height="907"/>
+      <xy x="20" y="20" width="1250" height="907"/>
     </constraints>
-    <properties>
-      <enabled value="true"/>
-      <minimumSize width="900" height="600"/>
-      <opaque value="false"/>
-      <preferredSize width="900" height="600"/>
-    </properties>
+    <properties/>
     <border type="none"/>
     <children>
       <grid id="6a30c" binding="confirmacaoSenha" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -179,6 +174,38 @@
                   </model>
                 </properties>
               </component>
+              <grid id="11af" binding="tiposUsuarioPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <visible value="false"/>
+                </properties>
+                <border type="none" title=""/>
+                <children>
+                  <component id="7a208" class="javax.swing.JComboBox" binding="comboBoxTipoUsuario">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="9" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <model>
+                        <item value="Cliente"/>
+                        <item value="Caixa"/>
+                        <item value="Gerente"/>
+                      </model>
+                    </properties>
+                  </component>
+                  <component id="9217f" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Tipo de Usuário"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
         </children>
@@ -262,6 +289,11 @@
       <member id="31132"/>
       <member id="6e373"/>
       <member id="af2aa"/>
+    </group>
+    <group name="buttonGroup1">
+      <member id="db0dc"/>
+      <member id="d4a92"/>
+      <member id="8447f"/>
     </group>
   </buttonGroups>
 </form>

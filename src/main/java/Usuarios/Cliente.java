@@ -1,14 +1,17 @@
 package Usuarios;
 
-import Persistencias.Sistema;
+import Investimentos.Investimento;
+
+import Exceptions.SaldoException;
 import TiposAtributos.*;
 
-import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente extends Usuario {
+    private final Extrato extrato;
     private double saldo;
-    private Extrato extrato;
+    private final List<Investimento> investimentos;
 
     public Cliente(String nome,
                    DataDeNascimento dataNascimento,
@@ -21,6 +24,7 @@ public class Cliente extends Usuario {
         tipoUsuario = "Cliente";
         this.saldo = 0;
         this.extrato = new Extrato();
+        this.investimentos = new ArrayList<>();
     }
 
     public double getSaldo() {
@@ -29,9 +33,9 @@ public class Cliente extends Usuario {
 
     void confirmarSaldo(double valor) {
         if (this.getSaldo() < valor) {
-            throw new RuntimeException("Saldo insuficiente.");
+            throw new SaldoException("Saldo insuficiente.");
         } else if (this.getSaldo() == 0) {
-            throw new RuntimeException("Não pode fazer transferências sem valor.");
+            throw new SaldoException("Não pode fazer transferências sem valor.");
         }
     }
 
@@ -48,59 +52,15 @@ public class Cliente extends Usuario {
         extrato.setEntrada(valor, tipoTransferencia);
     }
 
-    boolean confirmaSenha() {
-
-        for (int i = 3; i > 0; i--) {
-            String senhatemp = JOptionPane.showInputDialog("Digite a senha do usuário para confirmar a operação");
-            if (this.verificaSenha(senhatemp)) {
-                return true;
-            } else {
-                if (i > 1)
-                    JOptionPane.showMessageDialog(null, "Senha incorreta, tente novamente. \n" + (i - 1) + " tentativas restantes");
-            }
-        }
-        return false;
-    }
-
-//    float consultaSaldoExtrato(){
-//        //confirma operacao com senha
-//        return 1;
-//    }
-
-    void investeFixo() {
-        //autoriza investimento
-        confirmaSenha();
-    }
-
-    void investeVariavel() {
-        //autoriza investimento
-        //confirmarSenha();
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "nome='" + nome + '\'' +
-                ", dataNascimento='" + dataNascimento + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", endereco='" + endereco + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                ", tipoUsuario='" + tipoUsuario + '\'' +
-                ", extrato='" + extrato + '\'' +
-                '}';
-    }
-
     public String getSaldoString() {
         return String.valueOf(this.saldo);
     }
 
-    public List<String> getEntrada(){
+    public List<String> getEntrada() {
         return this.extrato.getEntrada();
     }
 
-    public List<String> getSaida(){
+    public List<String> getSaida() {
         return this.extrato.getSaida();
     }
 }

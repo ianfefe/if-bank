@@ -1,8 +1,7 @@
 package Persistencias;
 
-import TiposAtributos.*;
-import Usuarios.Gerente;
-import Usuarios.Sistema;
+import Investimentos.RendaFixa;
+import Usuarios.Cliente;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -14,30 +13,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersistenciaGerente {
-    private static final String ARQUIVO_JSON = "gerentes.json";
+public class PersistenciaRendaFixa {
+    private static final String ARQUIVO_JSON = "rendaFixa.json";
 
-    public static void salvarAdms(List<Gerente> admins) {
+    public static void salvarRendaFixa(List<RendaFixa> rendaFixas) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter writer = new FileWriter(ARQUIVO_JSON)) {
-            gson.toJson(admins, writer);
+            gson.toJson(rendaFixas, writer);
         } catch (IOException e) {
-            System.err.println("Erro ao salvar a lista de administradores: " + e.getMessage());
+            System.err.println("Erro ao salvar a lista de renda fixa: " + e.getMessage());
         }
     }
 
-    public static List<Gerente> carregarAdms() {
+    public static List<RendaFixa> carregarRendaFixa() {
         Gson gson = new Gson();
 
         try (FileReader reader = new FileReader(ARQUIVO_JSON)) {
-            return gson.fromJson(reader, new TypeToken<List<Gerente>>() {
+            return gson.fromJson(reader, new TypeToken<List<RendaFixa>>() {
             }.getType());
         } catch (FileNotFoundException e) {
             System.out.println("Arquivo não encontrado. Criando novo arquivo...");
-            Sistema.criarUsuario("Adm", new DataDeNascimento("01/01/2000"), new CPF("111.111.111-11", "Gerente"), new Endereco("abc", "123", "Casa"), new Telefone("(32)3222-2223"), new Email("aaaaa@gmail.com"), "123", "Gerente");
         } catch (IOException e) {
-            System.err.println("Erro ao carregar a lista de administradores: " + e.getMessage());
+            System.err.println("Erro ao carregar a lista de renda fixa: " + e.getMessage());
         }
 
         return new ArrayList<>();

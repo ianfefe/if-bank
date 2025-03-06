@@ -22,7 +22,7 @@ public class DepositoFrame extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(depositoPanel);
         Utility.aplicaMascaraCpf(campoConta);
-        Utility.adicionaBotaoCancelarOperacao(botaoCancelar,this);
+        Utility.adicionaBotaoCancelarOperacao(botaoCancelar, this);
 
         botaoConfirmar.addActionListener(new ActionListener() {
             @Override

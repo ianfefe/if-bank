@@ -6,12 +6,11 @@ import javax.swing.*;
 import java.util.Objects;
 
 public class Usuario {
-    protected static int id = 0;
-
-    protected String userID;
+    protected final DataDeNascimento dataNascimento;
+    protected final CPF cpf;
+    protected int id = Sistema.getClientes().size() + Sistema.getCaixas().size() + Sistema.getGerentes().size();
+    protected String userID = String.valueOf(id);
     protected String nome;
-    protected DataDeNascimento dataNascimento;
-    protected CPF cpf;
     protected Endereco endereco;
     protected Telefone telefone;
     protected Email email;
@@ -26,7 +25,6 @@ public class Usuario {
                    Email email,
                    String senha) {
 
-        this.userID = String.valueOf(id++);
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
@@ -35,6 +33,40 @@ public class Usuario {
         this.email = email;
         this.senha = senha;
 
+    }
+
+    protected void editaUsuario(String nome,
+                                Endereco endereco,
+                                Telefone telefone,
+                                Email email,
+                                String senha) {
+
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.email = email;
+        this.senha = senha;
+    }
+
+    public boolean confirmaSenha() {
+
+        for (int i = 3; i > 0; i--) {
+            String senhatemp = JOptionPane.showInputDialog("Digite a senha do usuário para confirmar a operação");
+
+            if (senhatemp == null) {
+                return false;
+            } else if (this.verificaSenha(senhatemp)) {
+                return true;
+            } else {
+                if (i > 1)
+                    JOptionPane.showMessageDialog(null, "Senha incorreta, tente novamente. \n" + (i - 1) + " tentativas restantes");
+            }
+        }
+        return false;
+    }
+
+    public boolean verificaSenha(String senha) {
+        return this.senha.equals(senha);
     }
 
     public String getNome() {
@@ -77,14 +109,10 @@ public class Usuario {
         return this.senha;
     }
 
-    public boolean verificaSenha(String senha) {
-        return this.senha.equals(senha);
-    }
-
     public void transferir(Cliente origem, Cliente destino, double valor) {
         if (confirmaValor(valor)) {
-            Objects.requireNonNull(origem, "Conta de origem não encontrada.");
-            Objects.requireNonNull(destino, "Conta destino não encontrada.");
+            Objects.requireNonNull(origem, "Conta de origem não encontrada para transferência.");
+            Objects.requireNonNull(destino, "Conta destino não encontrada para transferência.");
             if (destino.getCpfString().equals(origem.getCpfString())) {
                 JOptionPane.showMessageDialog(null, "Não é possível transferir para a própria conta.", "", JOptionPane.ERROR_MESSAGE);
                 return;

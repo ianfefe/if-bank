@@ -1,7 +1,7 @@
 package Frames;
 
 import Usuarios.Cliente;
-import Persistencias.Sistema;
+import Usuarios.Sistema;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -54,7 +54,7 @@ public class Utility {
                 return cliente;
             }
         }
-        JOptionPane.showMessageDialog(null,"Conta não encontrada.","Conta inválida.",JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Conta não encontrada.", "Conta inválida.", JOptionPane.ERROR_MESSAGE);
         throw new RuntimeException("Conta não encontrada.");
     }
 

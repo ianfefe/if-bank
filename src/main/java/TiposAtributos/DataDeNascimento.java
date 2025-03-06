@@ -12,13 +12,17 @@ public class DataDeNascimento {
 
     private String dataDeNascimento;
 
-    public DataDeNascimento(String dataDeNascimentoString){
-        if(validaMaioridade(dataDeNascimentoString)){
+    public DataDeNascimento(String dataDeNascimentoString) {
+        if (validaMaioridade(dataDeNascimentoString)) {
             this.dataDeNascimento = dataDeNascimentoString;
         }
     }
 
-    public boolean validaMaioridade(String dataDeNascimentoString){
+    public String getDataDeNascimentoString() {
+        return dataDeNascimento;
+    }
+
+    public boolean validaMaioridade(String dataDeNascimentoString) {
         try {
             DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataNascimento = LocalDate.parse(dataDeNascimentoString, formataData);
@@ -28,7 +32,7 @@ public class DataDeNascimento {
 
             if (idade >= 18) {
                 return true;
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "É necessário ser maior de idade para se cadastrar.");
                 throw new DataNascimentoException("É necessário ser maior de idade para se cadastrar.");
             }

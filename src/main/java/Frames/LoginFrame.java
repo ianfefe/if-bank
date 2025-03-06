@@ -3,7 +3,7 @@ package Frames;
 import Usuarios.Caixa;
 import Usuarios.Cliente;
 import Usuarios.Gerente;
-import Persistencias.Sistema;
+import Usuarios.Sistema;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -82,10 +82,7 @@ public class LoginFrame extends JFrame {
 
     private void validarCampos(ActionEvent e) {
 
-        boolean todosPreenchidos = true;
-
-        if (campoUsuario.getText().isBlank())
-            todosPreenchidos = false;
+        boolean todosPreenchidos = !campoUsuario.getText().isBlank();
 
         if (new String(campoSenha.getPassword()).isBlank())
             todosPreenchidos = false;

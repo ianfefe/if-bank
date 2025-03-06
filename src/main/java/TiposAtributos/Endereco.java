@@ -53,10 +53,7 @@ public class Endereco {
     }
 
     public void setEndereco(String rua, String numero, String complemento) throws EnderecoException {
-        boolean valido = true;
-
-        if (!isRuaValida(rua))
-            valido = false;
+        boolean valido = isRuaValida(rua);
 
         if (!isNumeroValido(numero))
             valido = false;
@@ -64,8 +61,9 @@ public class Endereco {
         if (!isComplementoValido(complemento))
             valido = false;
 
-        if(!valido)
+        if (!valido)
             throw new EnderecoException();
+
 
         this.complemento = complemento;
         this.numero = numero;

@@ -1,41 +1,45 @@
 package Frames;
 
+import Exceptions.CPFException;
 import TiposAtributos.*;
+import Usuarios.Sistema;
+import Usuarios.Usuario;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.text.ParseException;
 
-import static Persistencias.Sistema.criarUsuario;
+import static Usuarios.Sistema.criarUsuario;
 
 public class CadastroFrame extends JFrame {
-    private JTextField campoNome;
-    private JPasswordField campoSenha;
-    private JPasswordField campoSenhaConfirma;
-    private JLabel senha;
-    private JLabel senhaConfirma;
-    private JTextField campoEmail;
-    private JFormattedTextField campoTelefone;
-    private JLabel email;
-    private JLabel telefone;
-    private JTextField campoNumeroEndereco;
-    private JTextField campoRua;
-    private JPanel endereco;
-    private JPanel formasContato;
-    private JPanel confirmacaoSenha;
-    private JPanel cadastroPanel;
-    private JLabel complemento;
-    private JButton confirmarCadastroButton;
-    private JLabel nomeCompleto;
-    private JLabel dataDeNascimentoLabel;
-    private JFormattedTextField campoDataNascimento;
-    private JLabel CPFLabel;
-    private JFormattedTextField campoCPF;
-    private JComboBox<String> complementoBox;
-    private JButton botaoVoltar;
+    protected JTextField campoNome;
+    protected JPasswordField campoSenha;
+    protected JPasswordField campoSenhaConfirma;
+    protected JLabel senha;
+    protected JLabel senhaConfirma;
+    protected JTextField campoEmail;
+    protected JFormattedTextField campoTelefone;
+    protected JLabel email;
+    protected JLabel telefone;
+    protected JTextField campoNumeroEndereco;
+    protected JTextField campoRua;
+    protected JPanel endereco;
+    protected JPanel formasContato;
+    protected JPanel confirmacaoSenha;
+    protected JPanel cadastroPanel;
+    protected JLabel complemento;
+    protected JButton confirmarCadastroButton;
+    protected JLabel nomeCompleto;
+    protected JLabel dataDeNascimentoLabel;
+    protected JFormattedTextField campoDataNascimento;
+    protected JLabel CPFLabel;
+    protected JFormattedTextField campoCPF;
+    protected JComboBox<String> complementoBox;
+    protected JButton botaoVoltar;
+    protected JPanel tiposUsuarioPanel;
+    protected JComboBox<String> comboBoxTipoUsuario;
 
     public CadastroFrame() {
 
@@ -48,100 +52,128 @@ public class CadastroFrame extends JFrame {
         botaoVoltar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
-                SwingUtilities.invokeLater(() -> {
-                    new LoginFrame().setVisible(true);
-                });
+                voltar(e);
             }
         });
 
         confirmarCadastroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                String senha = new String(campoSenha.getPassword());
-                String senhaConfirma = new String(campoSenhaConfirma.getPassword());
-
-                if (senha.equals(senhaConfirma)) {
-                    validarCampos(e);
-                    criarUsuario(
-                            campoNome.getText(),
-                            new DataDeNascimento(campoDataNascimento.getText()),
-                            new CPF(campoCPF.getText()),
-                            new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem()),
-                            new Telefone(campoTelefone.getText()),
-                            new Email(campoEmail.getText()),
-                            new String(campoSenha.getPassword()),
-                            "Cliente");
-
-                    dispose();
-                    SwingUtilities.invokeLater(() -> {
-                        new LoginFrame().setVisible(true);
-                    });
-
-                } else {
-                    JOptionPane.showMessageDialog(campoSenhaConfirma, "Senha diferente.", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
+                cadastrar(e);
             }
         });
     }
 
-    private void validarCampos(ActionEvent e) {
+    protected void voltar(ActionEvent e) {
+        int sair = JOptionPane.showConfirmDialog(null, "Deseja cancelar a operação? Todo progresso será perdido.", "Cancelar operação.", 2);
+        if (sair == 0) {
+            dispose();
+            SwingUtilities.invokeLater(() -> {
+                new LoginFrame().setVisible(true);
+            });
+        }
+    }
+
+    protected void cadastrar(ActionEvent e) {
+        String senha = new String(campoSenha.getPassword());
+        String senhaConfirma = new String(campoSenhaConfirma.getPassword());
+
+        if (senha.equals(senhaConfirma)) {
+            if (validarCampos(e, "Cliente", "Cadastro")) {
+                criarUsuario(
+                        campoNome.getText(),
+                        new DataDeNascimento(campoDataNascimento.getText()),
+                        new CPF(campoCPF.getText(), "Cliente"),
+                        new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem()),
+                        new Telefone(campoTelefone.getText()),
+                        new Email(campoEmail.getText()),
+                        new String(campoSenha.getPassword()),
+                        "Cliente");
+                JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+                SwingUtilities.invokeLater(() -> {
+                    new LoginFrame().setVisible(true);
+                });
+            } else {
+                JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(campoSenhaConfirma, "Senha diferente.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    protected boolean validarCampos(ActionEvent e, String tipoUsuario, String tipoModificacao) {
 
         boolean todosPreenchidos = true;
 
-        if (campoNome.getText().isBlank())
-            todosPreenchidos = false;
+        try {
 
-        if (campoDataNascimento.getText().replaceAll("_", "").isBlank()) {
-            todosPreenchidos = false;
-        } else {
-            new DataDeNascimento(campoDataNascimento.getText());
-        }
+            if (campoNome.getText().isBlank())
+                todosPreenchidos = false;
 
-        if (campoCPF.getText().replaceAll("_", "").isBlank()) {
-            todosPreenchidos = false;
-        } else {
-            new CPF(campoCPF.getText());
-        }
-
-        if (campoEmail.getText().isBlank()) {
-            todosPreenchidos = false;
-        } else {
-            new Email(campoEmail.getText());
-        }
-
-        if (campoTelefone.getText().replaceAll("[_()-]", "").trim().isEmpty()) {
-            todosPreenchidos = false;
-        } else {
-            new Telefone(campoTelefone.getText());
-        }
-
-        if (campoNumeroEndereco.getText().isBlank()) {
-            todosPreenchidos = false;
-        } else {
-            if (campoRua.getText().isBlank()) {
+            if (campoDataNascimento.getText().replaceAll("_", "").isBlank()) {
                 todosPreenchidos = false;
             } else {
-                new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem());
+                new DataDeNascimento(campoDataNascimento.getText());
             }
+
+            if (campoCPF.getText().replaceAll("_", "").isBlank()) {
+                todosPreenchidos = false;
+            } else {
+                new CPF(campoCPF.getText(), tipoUsuario);
+            }
+
+            if (campoEmail.getText().isBlank()) {
+                todosPreenchidos = false;
+            } else {
+                new Email(campoEmail.getText());
+            }
+
+            if (campoTelefone.getText().replaceAll("[_()-]", "").trim().isEmpty()) {
+                todosPreenchidos = false;
+            } else {
+                new Telefone(campoTelefone.getText());
+            }
+
+            if (campoNumeroEndereco.getText().isBlank()) {
+                todosPreenchidos = false;
+            } else {
+                if (campoRua.getText().isBlank()) {
+                    todosPreenchidos = false;
+                } else {
+                    new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem());
+                }
+            }
+
+            if (new String(campoSenha.getPassword()).isEmpty())
+                todosPreenchidos = false;
+
+            if (new String(campoSenhaConfirma.getPassword()).isEmpty())
+                todosPreenchidos = false;
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.\n " +
+                    "Verifique se as informações são válidas.\n" +
+                    "-A data de nascimento deve ser válida e maior de 18 anos.\n" +
+                    "-O email deve ser válido.\n" +
+                    "-Rua não pode conter números.");
+            return false;
         }
 
-        if (new String(campoSenha.getPassword()).isEmpty())
-            todosPreenchidos = false;
-
-        if (new String(campoSenhaConfirma.getPassword()).isEmpty())
-            todosPreenchidos = false;
 
         if (todosPreenchidos) {
-            JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
+            if (!tipoModificacao.equals("Edição")) {
+                for (Usuario usuario : Sistema.getUsuarios()) {
+                    if (usuario.getCpfString().equals(campoCPF.getText()) && usuario.getTipoUsuario().equals(tipoUsuario)) {
+                        JOptionPane.showMessageDialog(null, "CPF já cadastrado.");
+                        throw new CPFException("CPF já cadastrado.");
+                    }
+                }
+            }
         }
-
+        return todosPreenchidos;
     }
 
-    private void aplicaMascaraDataNascimento() {
+    protected void aplicaMascaraDataNascimento() {
         try {
             MaskFormatter formataNascimento = new MaskFormatter("##/##/####");
             formataNascimento.setPlaceholderCharacter('_');
@@ -152,7 +184,7 @@ public class CadastroFrame extends JFrame {
         }
     }
 
-    private void aplicaMascaraTelefone() {
+    protected void aplicaMascaraTelefone() {
         try {
             MaskFormatter formataTelefone = new MaskFormatter("(##)####-####");
             formataTelefone.setPlaceholderCharacter('_');
@@ -163,7 +195,7 @@ public class CadastroFrame extends JFrame {
         }
     }
 
-    private void aplicarMascarasTexto() {
+    protected void aplicarMascarasTexto() {
         Utility.aplicaMascaraCpf(campoCPF);
         aplicaMascaraDataNascimento();
         aplicaMascaraTelefone();

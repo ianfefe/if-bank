@@ -12,7 +12,7 @@ public class MenuCaixa extends JFrame {
     private JButton botaoSaque;
     private JButton botaoDeposito;
     private JLabel nomeUsuario;
-    private JButton botaoConfiguracoes;
+    private JButton botaoPerfil;
     private JButton botaoSair;
     private JPanel caixaPanel;
     private JPanel transferenciasBotoesPanel;
@@ -22,7 +22,7 @@ public class MenuCaixa extends JFrame {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setContentPane(caixaPanel);
-        nomeUsuario.setText(usuarioLogado.getNome());
+        nomeUsuario.setText("CAIXA - " + usuarioLogado.getNome());
         Utility.adicionaOpcaoDeslogarUsuario(botaoSair, this);
 
         botaoTransferir.addActionListener(new ActionListener() {
@@ -30,6 +30,15 @@ public class MenuCaixa extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 SwingUtilities.invokeLater(() -> {
                     new TransferenciaCompletaFrame().setVisible(true);
+                });
+            }
+        });
+
+        botaoPerfil.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    new EdicaoDadosFrame(usuarioLogado, usuarioLogado).setVisible(true);
                 });
             }
         });
