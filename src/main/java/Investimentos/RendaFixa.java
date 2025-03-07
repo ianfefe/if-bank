@@ -6,21 +6,15 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class RendaFixa implements InvestimentoBase {
+public class RendaFixa {
     private final String nome;
     private final String tipo = "Renda Fixa";
-    private final String resgateMin;
-    private final String resgateMax;
+    private final int resgateMinDias;
+    private final int resgateMaxDias;
     private final double rendimento;
 
-
-    public RendaFixa(String nome, String resgateMinString, String resgateMaxString, double rendimentoAnual) {
-
-        DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate resgateMin = LocalDate.parse(resgateMinString, formataData);
-        LocalDate resgateMax = LocalDate.parse(resgateMaxString, formataData);
-
-        if (!resgateMin.isBefore(resgateMax)) {
+    public RendaFixa(String nome, int resgateMinDias, int resgateMaxDias, double rendimentoAnual) {
+        if (resgateMinDias > resgateMaxDias) {
             JOptionPane.showMessageDialog(null, "A data de resgate mínima deve anteceder o tempo de resgate limite.");
             throw new RuntimeException("Data de resgate mínimo superior à limite.");
         }
@@ -29,33 +23,44 @@ public class RendaFixa implements InvestimentoBase {
             throw new RuntimeException("Investimento com rendimento abaixo de zero");
         }
         this.nome = nome;
-        this.resgateMin = resgateMinString;
-        this.resgateMax = resgateMaxString;
+        this.resgateMinDias = resgateMinDias;
+        this.resgateMaxDias = resgateMaxDias;
         this.rendimento = rendimentoAnual / 100;
+        JOptionPane.showMessageDialog(null, "Investimento criado com sucesso.");
     }
 
-    @Override
-    public boolean expirouAplicacao() {
+    public double getRendimento() {
+        return rendimento;
+    }
+
+    public int getResgateMaxDias() {
+        return resgateMaxDias;
+    }
+
+    public int getResgateMinDias() {
+        return resgateMinDias;
+    }
+
+    public boolean expirouAplicacao(LocalDate dataInicio) {
 
         DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return LocalDate.now().isEqual(LocalDate.parse(this.resgateMax, formataData));
+        LocalDate resgateMax = dataInicio.plusDays(this.resgateMaxDias);
+
+        return LocalDate.now().isEqual(resgateMax);
     }
 
-    @Override
     public String getNome() {
         return nome;
     }
 
-    @Override
     public String getTipo() {
         return this.tipo;
     }
 
-    @Override
     public double calculaRendimento(LocalDate inicioAplicacao) {
 
         DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate resgateMinData = LocalDate.parse(this.resgateMin, formataData);
+        LocalDate resgateMinData = inicioAplicacao.plusDays(this.resgateMinDias);
 
         if (resgateMinData.isAfter(LocalDate.now())) {
             JOptionPane.showMessageDialog(null, "Resgate indisponível, confira o prazo de resgate mínimo.");

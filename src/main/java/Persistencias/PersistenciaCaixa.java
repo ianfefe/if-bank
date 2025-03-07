@@ -34,7 +34,7 @@ public class PersistenciaCaixa {
             return gson.fromJson(reader, new TypeToken<List<Caixa>>() {
             }.getType());
         } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado. Criando novo arquivo...");
+            System.out.println("Arquivo não encontrado (" + ARQUIVO_JSON + "). Criando novo arquivo...");
         } catch (IOException e) {
             System.err.println("Erro ao carregar a lista de administradores: " + e.getMessage());
         }

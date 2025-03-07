@@ -61,8 +61,8 @@ public class Sistema {
     }
 
     public static void carregarUsuarios() {
-        caixas = PersistenciaCaixa.carregarAdms();
         gerentes = PersistenciaGerente.carregarAdms();
+        caixas = PersistenciaCaixa.carregarAdms();
         clientes = PersistenciaCliente.carregarClientes();
         listaUsuarios();
     }

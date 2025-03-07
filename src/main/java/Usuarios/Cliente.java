@@ -4,14 +4,16 @@ package Usuarios;
 
 import Exceptions.SaldoException;
 import Investimentos.Investimento;
+import Investimentos.RendaFixa;
 import TiposAtributos.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente extends Usuario {
     private final Extrato extrato;
-    private final List<Investimento> investimentos;
+    private final List<Investimento> investimentos = new ArrayList<>();
     private double saldo;
 
     public Cliente(String nome,
@@ -25,7 +27,19 @@ public class Cliente extends Usuario {
         tipoUsuario = "Cliente";
         this.saldo = 0;
         this.extrato = new Extrato();
-        this.investimentos = new ArrayList<>();
+    }
+
+    public void investir(String investimentoNome, RendaFixa investimentoBase, Double valor) {
+        confirmarSaldo(valor);
+        if (confirmaSenha()) {
+            this.sacar(valor, "Investimento: ");
+            this.investimentos.add(new Investimento(investimentoNome, valor, investimentoBase));
+            Sistema.salvaUsuarios();
+        }
+    }
+
+    public List<Investimento> getInvestimentos() {
+        return this.investimentos;
     }
 
     public double getSaldo() {
@@ -43,18 +57,30 @@ public class Cliente extends Usuario {
     protected void sacar(double valor, String tipoTransferencia) {
         confirmarSaldo(valor);
         this.saldo -= valor;
-        Sistema.salvaUsuarios();
         extrato.setSaida(valor, tipoTransferencia);
+        Sistema.salvaUsuarios();
     }
 
     protected void depositar(double valor, String tipoTransferencia) {
         this.saldo += valor;
-        Sistema.salvaUsuarios();
         extrato.setEntrada(valor, tipoTransferencia);
+        Sistema.salvaUsuarios();
     }
 
-    public String getSaldoString() {
-        return String.valueOf(this.saldo);
+    public void resgataInvestimento(Investimento aplicacao) {
+        for (Investimento investimento : investimentos) {
+            if (investimento.equals(aplicacao)) {
+                if (confirmaSenha()) {
+                    if (investimento.resgatarInvestimento() == 0) {
+                        return;
+                    }
+                    this.depositar(investimento.resgatarInvestimento(), "Investimento: ");
+                    investimentos.remove(investimento);
+                    JOptionPane.showMessageDialog(null, "Investimento resgatado com sucesso!");
+                    break;
+                }
+            }
+        }
     }
 
     public List<String> getEntrada() {

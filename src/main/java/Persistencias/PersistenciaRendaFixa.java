@@ -34,7 +34,7 @@ public class PersistenciaRendaFixa {
             return gson.fromJson(reader, new TypeToken<List<RendaFixa>>() {
             }.getType());
         } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado. Criando novo arquivo...");
+            System.out.println("Arquivo não encontrado (" + ARQUIVO_JSON + "). Criando novo arquivo...");
         } catch (IOException e) {
             System.err.println("Erro ao carregar a lista de renda fixa: " + e.getMessage());
         }

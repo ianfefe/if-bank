@@ -4,40 +4,51 @@ package Investimentos;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Investimento {
-    private final double valorAplicado;
     private final String dataInicio;
-    private final InvestimentoBase tipoInvestimento;
+    private final String nome;
+    private double valorAplicado;
+    private RendaFixa investimento;
+    private boolean estado = true;
 
-    public Investimento(double valorAplicado, InvestimentoBase tipoInvestimento) {
-        if (tipoInvestimento == null || valorAplicado <= 0) {
+    public Investimento(String nome, double valorAplicado, RendaFixa investimento) {
+        Objects.requireNonNull(investimento);
+        if (valorAplicado <= 0) {
             throw new RuntimeException("Investimento inválido.");
         }
 
+        this.investimento = investimento;
+        this.nome = nome;
         this.valorAplicado = valorAplicado;
-        this.tipoInvestimento = tipoInvestimento;
-
-        LocalDate data = LocalDate.now();
-        DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        this.dataInicio = data.format(formataData);
+        this.dataInicio = new Data().dataToString(LocalDate.now());
     }
 
-    private LocalDate getDataInicioDate() {
+    public String getNome() {
+        return this.nome;
+    }
 
-        DateTimeFormatter formataData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public boolean getEstado() {
+        return this.estado;
+    }
 
-        return LocalDate.parse(this.dataInicio, formataData);
+    public double getValorAplicado() {
+        return this.valorAplicado;
     }
 
     public double resgatarInvestimento() {
+
         double imposto;
-        double rendimentoBruto = valorAplicado * tipoInvestimento.calculaRendimento(getDataInicioDate());
+        try {
+            this.investimento.calculaRendimento(new Data().dataToDate(dataInicio));
+        } catch (RuntimeException ex) {
+            return 0;
+        }
+        double rendimentoBruto = valorAplicado * this.investimento.calculaRendimento(new Data().dataToDate(dataInicio));
 
         LocalDate hoje = LocalDate.now();
-        int tempoPassado = Period.between(getDataInicioDate(), hoje).getDays();
+        int tempoPassado = Period.between(new Data().dataToDate(dataInicio), hoje).getDays();
 
         if (tempoPassado < 180) {
             imposto = (rendimentoBruto - valorAplicado) * 0.225;
@@ -53,7 +64,7 @@ public class Investimento {
     }
 
     public void aplicacaoExpirada() {
-        if (tipoInvestimento.expirouAplicacao()) {
+        if (this.investimento.expirouAplicacao(new Data().dataToDate(dataInicio))) {
             resgatarInvestimento();
         }
     }

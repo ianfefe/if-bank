@@ -3,9 +3,7 @@
 package Usuarios;
 
 import Investimentos.RendaFixa;
-import Investimentos.RendaVariavel;
 import Persistencias.PersistenciaRendaFixa;
-import Persistencias.PersistenciaRendaVariavel;
 import TiposAtributos.*;
 
 import javax.swing.*;
@@ -16,7 +14,6 @@ import java.util.Objects;
 public class Gerente extends Usuario implements Administrador {
 
     private static List<RendaFixa> listaRendaFixa = new ArrayList<>();
-    private static List<RendaVariavel> listaRendaVariavel = new ArrayList<>();
 
     public Gerente(String nome,
                    DataDeNascimento dataNascimento,
@@ -43,16 +40,11 @@ public class Gerente extends Usuario implements Administrador {
         PersistenciaRendaFixa.salvarRendaFixa(listaRendaFixa);
     }
 
-    public static List<RendaVariavel> getListaRendaVariavel() {
-        return listaRendaVariavel;
-    }
-
-    public static void carregarRendaVariavel() {
-        listaRendaVariavel = PersistenciaRendaVariavel.carregarVariavel();
-    }
-
-    public static void salvarRendaVariavel() {
-        PersistenciaRendaVariavel.salvarRendaVariavel(listaRendaVariavel);
+    public void removerRendaFixa(int indice) {
+        if (this.confirmaSenha()) {
+            listaRendaFixa.remove(indice);
+            PersistenciaRendaFixa.salvarRendaFixa(listaRendaFixa);
+        }
     }
 
     @Override
@@ -76,29 +68,25 @@ public class Gerente extends Usuario implements Administrador {
         }
     }
 
-    public void cadastraRendaFixa(String nomeInvestimento, String resgateMin, String resgateMax, double rendimento) {
+    public void cadastraRendaFixa(String nomeInvestimento, int resgateMin, int resgateMax, double rendimento) {
         Objects.requireNonNull(nomeInvestimento);
-        Objects.requireNonNull(resgateMin);
-        Objects.requireNonNull(resgateMax);
         if (listaRendaFixa.isEmpty()) {
             this.confirmaSenha();
             listaRendaFixa.add(new RendaFixa(nomeInvestimento, resgateMin, resgateMax, rendimento));
             JOptionPane.showMessageDialog(null, "Investimento criado com sucesso.");
         } else {
             for (RendaFixa investimento : listaRendaFixa) {
-                if (!investimento.getNome().equals(nomeInvestimento)) {
-                    if (this.confirmaSenha()) {
-                        listaRendaFixa.add(new RendaFixa(nomeInvestimento, resgateMin, resgateMax, rendimento));
-                        JOptionPane.showMessageDialog(null, "Investimento criado com sucesso.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Senha incorreta ou o usuário cancelou a operação.");
-                    }
-                } else {
+                if (investimento.getNome().equals(nomeInvestimento)) {
                     JOptionPane.showMessageDialog(null, "Nome de investimento repetido", "Duplicado", JOptionPane.ERROR_MESSAGE);
+                    break;
+                } else {
+                    if (confirmaSenha()) {
+                        listaRendaFixa.add(new RendaFixa(nomeInvestimento, resgateMin, resgateMax, rendimento));
+                        break;
+                    }
                 }
             }
         }
         salvarRendaFixa();
     }
-
 }

@@ -5,7 +5,6 @@ import Usuarios.Gerente;
 import Usuarios.Sistema;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Main {
 

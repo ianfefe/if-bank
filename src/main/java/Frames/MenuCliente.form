@@ -115,7 +115,9 @@
                     <children>
                       <component id="fb9a7" class="javax.swing.JList" binding="listaAplicacoesCliente">
                         <constraints/>
-                        <properties/>
+                        <properties>
+                          <font size="16"/>
+                        </properties>
                       </component>
                     </children>
                   </scrollpane>
