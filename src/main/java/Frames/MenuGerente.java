@@ -10,8 +10,11 @@ import Usuarios.Sistema;
 import Usuarios.Usuario;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
+import java.util.Locale;
 
 public class MenuGerente extends JFrame {
     private JTabbedPane abasPanel;
@@ -43,116 +46,56 @@ public class MenuGerente extends JFrame {
         desenhaListaUsuarios(usuarioLogado);
         desenhaListaInvestimentos();
 
-        botaoTransferir.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(() -> {
-                    new TransferenciaCompletaFrame().setVisible(true);
-                });
-            }
-        });
+        botaoTransferir.addActionListener(e -> SwingUtilities.invokeLater(() -> new TransferenciaCompletaFrame().setVisible(true)));
 
-        botaoSaque.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(() -> {
-                    new SaqueFrame(usuarioLogado).setVisible(true);
-                });
-            }
-        });
+        botaoSaque.addActionListener(e -> SwingUtilities.invokeLater(() -> new SaqueFrame(usuarioLogado).setVisible(true)));
 
-        botaoDeposito.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(() -> {
-                    new DepositoFrame(usuarioLogado).setVisible(true);
-                });
-            }
-        });
+        botaoDeposito.addActionListener(e -> SwingUtilities.invokeLater(() -> new DepositoFrame(usuarioLogado).setVisible(true)));
 
-        botaoCriar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(() -> {
-                    new CadastroAdmFrame().setVisible(true);
-                });
-            }
-        });
+        botaoCriar.addActionListener(e -> SwingUtilities.invokeLater(() -> new CadastroAdmFrame().setVisible(true)));
 
-        recarregarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                desenhaListaUsuarios(usuarioLogado);
-            }
-        });
+        recarregarButton.addActionListener(e -> desenhaListaUsuarios(usuarioLogado));
 
-        botaoRemover.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        botaoRemover.addActionListener(e -> {
 
-                DefaultListModel<Usuario> modelo = listaModeloUsuarios();
-                int indice = listaUsuarios.getSelectedIndex();
-                for (Usuario usuario : Sistema.getUsuarios()) {
-                    if (!usuario.equals(usuarioLogado)) {
-                        if (usuario.getCpf().equals(modelo.getElementAt(indice).getCpf())) {
-                            try {
-                                if (usuarioLogado.confirmaSenha()) {
-                                    Sistema.removerUsuario(modelo.getElementAt(indice));
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Falha ao remover usuário, senha incorreta ou o usuário cancelou a operação.");
-                                    return;
-                                }
-                            } catch (RuntimeException ex) {
-                                JOptionPane.showMessageDialog(null, "Falha ao remover usuário.");
+            DefaultListModel<Usuario> modelo = listaModeloUsuarios();
+            int indice = listaUsuarios.getSelectedIndex();
+            for (Usuario usuario : Sistema.getUsuarios()) {
+                if (!usuario.equals(usuarioLogado)) {
+                    if (usuario.getCpf().equals(modelo.getElementAt(indice).getCpf())) {
+                        try {
+                            if (usuarioLogado.confirmaSenha()) {
+                                Sistema.removerUsuario(modelo.getElementAt(indice));
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Falha ao remover usuário, senha incorreta ou o usuário cancelou a operação.");
                                 return;
                             }
-
-                            JOptionPane.showMessageDialog(null, "Usuário removido com sucesso.\nClique em Recarregar para ver as alterações.");
-
-                            break;
+                        } catch (RuntimeException ex) {
+                            JOptionPane.showMessageDialog(null, "Falha ao remover usuário.");
+                            return;
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Não é possível remover o usuário conectado.");
+
+                        JOptionPane.showMessageDialog(null, "Usuário removido com sucesso.\nClique em Recarregar para ver as alterações.");
+
+                        break;
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não é possível remover o usuário conectado.");
                 }
             }
         });
 
-        botaoEditar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DefaultListModel<Usuario> modelo = listaModeloUsuarios();
-                int indice = listaUsuarios.getSelectedIndex();
-                SwingUtilities.invokeLater(() -> {
-                    new EdicaoDadosFrame(modelo.getElementAt(indice), usuarioLogado).setVisible(true);
-                });
-            }
+        botaoEditar.addActionListener(e -> {
+            DefaultListModel<Usuario> modelo = listaModeloUsuarios();
+            int indice = listaUsuarios.getSelectedIndex();
+            SwingUtilities.invokeLater(() -> new EdicaoDadosFrame(modelo.getElementAt(indice), usuarioLogado).setVisible(true));
         });
 
-        botaoPerfil.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(() -> {
-                    new EdicaoDadosFrame(usuarioLogado, usuarioLogado).setVisible(true);
-                });
-            }
-        });
+        botaoPerfil.addActionListener(e -> SwingUtilities.invokeLater(() -> new EdicaoDadosFrame(usuarioLogado, usuarioLogado).setVisible(true)));
 
-        botaoCriarInvestimento.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(() -> {
-                    new CriaInvestimento(usuarioLogado).setVisible(true);
-                });
-            }
-        });
+        botaoCriarInvestimento.addActionListener(e -> SwingUtilities.invokeLater(() -> new CriaInvestimento(usuarioLogado).setVisible(true)));
 
-        botaoRecarregarInvestimentos.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                desenhaListaInvestimentos();
-            }
-        });
+        botaoRecarregarInvestimentos.addActionListener(e -> desenhaListaInvestimentos());
     }
 
     private DefaultListModel<Usuario> listaModeloUsuarios() {
@@ -207,6 +150,125 @@ public class MenuGerente extends JFrame {
         if (!investimentosBaseDefaultListModel.isEmpty()) {
             listaInvestimentosGerente.setModel(listaInvestimentoString);
         }
+    }
+
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
+    }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        gerentePanel = new JPanel();
+        gerentePanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        gerentePanel.setPreferredSize(new Dimension(700, 600));
+        abasPanel = new JTabbedPane();
+        gerentePanel.add(abasPanel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
+        transferenciasAba = new JPanel();
+        transferenciasAba.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        abasPanel.addTab("Transferências", transferenciasAba);
+        botaoTransferir = new JButton();
+        Font botaoTransferirFont = this.$$$getFont$$$(null, -1, 16, botaoTransferir.getFont());
+        if (botaoTransferirFont != null) botaoTransferir.setFont(botaoTransferirFont);
+        botaoTransferir.setText("Transferir");
+        transferenciasAba.add(botaoTransferir, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        botaoSaque = new JButton();
+        Font botaoSaqueFont = this.$$$getFont$$$(null, -1, 16, botaoSaque.getFont());
+        if (botaoSaqueFont != null) botaoSaque.setFont(botaoSaqueFont);
+        botaoSaque.setText("Saque");
+        transferenciasAba.add(botaoSaque, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        botaoDeposito = new JButton();
+        Font botaoDepositoFont = this.$$$getFont$$$(null, -1, 16, botaoDeposito.getFont());
+        if (botaoDepositoFont != null) botaoDeposito.setFont(botaoDepositoFont);
+        botaoDeposito.setText("Depósito");
+        transferenciasAba.add(botaoDeposito, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
+        abasPanel.addTab("Investimentos", panel1);
+        listaInvestimentosGerente = new JList();
+        Font listaInvestimentosGerenteFont = this.$$$getFont$$$(null, -1, 16, listaInvestimentosGerente.getFont());
+        if (listaInvestimentosGerenteFont != null) listaInvestimentosGerente.setFont(listaInvestimentosGerenteFont);
+        panel1.add(listaInvestimentosGerente, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        botaoCriarInvestimento = new JButton();
+        botaoCriarInvestimento.setText("Criar");
+        panel1.add(botaoCriarInvestimento, new com.intellij.uiDesigner.core.GridConstraints(1, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        botaoRecarregarInvestimentos = new JButton();
+        botaoRecarregarInvestimentos.setText("Recarregar");
+        panel1.add(botaoRecarregarInvestimentos, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        abasPanel.addTab("Consultas", panel2);
+        listaUsuarios = new JList();
+        Font listaUsuariosFont = this.$$$getFont$$$(null, -1, 16, listaUsuarios.getFont());
+        if (listaUsuariosFont != null) listaUsuarios.setFont(listaUsuariosFont);
+        panel2.add(listaUsuarios, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.add(panel3, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        botaoEditar = new JButton();
+        botaoEditar.setText("Ver / Editar");
+        panel3.add(botaoEditar, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        botaoCriar = new JButton();
+        botaoCriar.setText("Criar");
+        panel3.add(botaoCriar, new com.intellij.uiDesigner.core.GridConstraints(0, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        recarregarButton = new JButton();
+        recarregarButton.setText("Recarregar");
+        panel3.add(recarregarButton, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        botaoRemover = new JButton();
+        botaoRemover.setText("Remover");
+        panel3.add(botaoRemover, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JToolBar toolBar1 = new JToolBar();
+        gerentePanel.add(toolBar1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 20), null, 0, false));
+        toolBar1.setBorder(BorderFactory.createTitledBorder(null, "IF BANK", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, this.$$$getFont$$$("Unispace", -1, 14, toolBar1.getFont()), null));
+        nomeUsuario = new JLabel();
+        nomeUsuario.setForeground(new Color(-12697532));
+        nomeUsuario.setText("Nome do usuário");
+        toolBar1.add(nomeUsuario);
+        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
+        toolBar1.add(spacer1);
+        botaoPerfil = new JButton();
+        botaoPerfil.setText("Editar perfil");
+        toolBar1.add(botaoPerfil);
+        botaoSair = new JButton();
+        botaoSair.setText("Sair");
+        toolBar1.add(botaoSair);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        Font font = new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
+        boolean isMac = System.getProperty("os.name", "").toLowerCase(Locale.ENGLISH).startsWith("mac");
+        Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
+        return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return gerentePanel;
     }
 }
 

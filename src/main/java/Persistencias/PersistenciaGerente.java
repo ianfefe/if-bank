@@ -37,7 +37,7 @@ public class PersistenciaGerente {
             }.getType());
         } catch (FileNotFoundException e) {
             System.out.println("Arquivo não encontrado. Criando novo arquivo...");
-            Sistema.criarUsuario("Adm", new DataDeNascimento("01/01/2000"), new CPF("111.111.111-11", "Gerente"), new Endereco("abc", "123", "Casa"), new Telefone("(32)3222-2223"), new Email("aaaaa@gmail.com"), "123", "Gerente");
+            Sistema.criarUsuario("Adm", new DataDeNascimento("01/01/2000"), new CPF("111.111.111-11"), new Endereco("abc", "123", "Casa"), new Telefone("(32)3222-2223"), new Email("aaaaa@gmail.com"), "123", "Gerente");
         } catch (IOException e) {
             System.err.println("Erro ao carregar a lista de administradores: " + e.getMessage());
         }

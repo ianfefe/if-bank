@@ -109,7 +109,6 @@ public class Sistema {
                 System.err.println("Tipo de usuário desconhecido.");
                 break;
         }
-        salvaUsuarios();
         carregarUsuarios();
     }
 

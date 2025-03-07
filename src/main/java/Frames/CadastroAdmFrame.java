@@ -38,7 +38,7 @@ public class CadastroAdmFrame extends CadastroFrame {
                 criarUsuario(
                         campoNome.getText(),
                         new DataDeNascimento(campoDataNascimento.getText()),
-                        new CPF(campoCPF.getText(), (String) comboBoxTipoUsuario.getSelectedItem()),
+                        new CPF(campoCPF.getText()),
                         new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem()),
                         new Telefone(campoTelefone.getText()),
                         new Email(campoEmail.getText()),

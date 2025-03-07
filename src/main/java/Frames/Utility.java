@@ -8,8 +8,6 @@ import Usuarios.Sistema;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
 public class Utility {
@@ -61,29 +59,21 @@ public class Utility {
     }
 
     public static void adicionaOpcaoDeslogarUsuario(JButton botao, Window tela) {
-        botao.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int sair = JOptionPane.showConfirmDialog(null, "Deseja sair?", "Desconectar", 2);
-                if (sair == 0) {
-                    Sistema.salvaUsuarios();
-                    tela.dispose();
-                    SwingUtilities.invokeLater(() -> {
-                        new LoginFrame().setVisible(true);
-                    });
-                }
+        botao.addActionListener(e -> {
+            int sair = JOptionPane.showConfirmDialog(null, "Deseja sair?", "Desconectar", JOptionPane.YES_NO_OPTION);
+            if (sair == 0) {
+                Sistema.salvaUsuarios();
+                tela.dispose();
+                SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
             }
         });
     }
 
     public static void adicionaBotaoCancelarOperacao(JButton botao, Window tela) {
-        botao.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int sair = JOptionPane.showConfirmDialog(null, "Deseja cancelar a operação? Todo progresso será perdido.", "Cancelar operação.", 2);
-                if (sair == 0) {
-                    tela.dispose();
-                }
+        botao.addActionListener(e -> {
+            int sair = JOptionPane.showConfirmDialog(null, "Deseja cancelar a operação? Todo progresso será perdido.", "Cancelar operação.", JOptionPane.YES_NO_OPTION);
+            if (sair == 0) {
+                tela.dispose();
             }
         });
     }

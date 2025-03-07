@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 public class CPF {
     private String cpf;
 
-    public CPF(String cpf, String tipoUsuario) {
-        setCPF(cpf, tipoUsuario);
+    public CPF(String cpf) {
+        setCPF(cpf);
     }
 
     private boolean isCPFValido(String cpf) {
@@ -25,7 +25,7 @@ public class CPF {
         return cpf;
     }
 
-    public void setCPF(String cpf, String tipoUsuario) {
+    public void setCPF(String cpf) {
         if (!isCPFValido(cpf))
             throw new CPFException();
 
