@@ -1,9 +1,10 @@
+//Nome: Ian Felix Fernandes Matrícula: 202376007
+
 package Investimentos;
 
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 public class RendaFixa implements InvestimentoBase {
     private final String nome;

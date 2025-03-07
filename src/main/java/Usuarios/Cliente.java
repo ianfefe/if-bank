@@ -1,8 +1,9 @@
+//Nome: Ian Felix Fernandes Matrícula: 202376007
+
 package Usuarios;
 
-import Investimentos.Investimento;
-
 import Exceptions.SaldoException;
+import Investimentos.Investimento;
 import TiposAtributos.*;
 
 import java.util.ArrayList;
@@ -10,8 +11,8 @@ import java.util.List;
 
 public class Cliente extends Usuario {
     private final Extrato extrato;
-    private double saldo;
     private final List<Investimento> investimentos;
+    private double saldo;
 
     public Cliente(String nome,
                    DataDeNascimento dataNascimento,
@@ -31,7 +32,7 @@ public class Cliente extends Usuario {
         return this.saldo;
     }
 
-    void confirmarSaldo(double valor) {
+    protected void confirmarSaldo(double valor) {
         if (this.getSaldo() < valor) {
             throw new SaldoException("Saldo insuficiente.");
         } else if (this.getSaldo() == 0) {

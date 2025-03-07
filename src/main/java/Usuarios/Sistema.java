@@ -1,12 +1,12 @@
+//Nome: Ian Felix Fernandes Matrícula: 202376007
+
 package Usuarios;
 
-import Frames.LoginFrame;
 import Persistencias.PersistenciaCaixa;
 import Persistencias.PersistenciaCliente;
 import Persistencias.PersistenciaGerente;
 import TiposAtributos.*;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 

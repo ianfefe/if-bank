@@ -1,13 +1,15 @@
+//Nome: Ian Felix Fernandes Matrícula: 202376007
+
 package Investimentos;
 
 import java.time.LocalDate;
 
 public class RendaVariavel implements InvestimentoBase {
 
+    private final String tipo = "Renda Variavel";
     double risco;
     double rentabilidade;
     private String nome;
-    private final String tipo = "Renda Variavel";
 
     RendaVariavel(double risco, double rentabilidade) {
         this.risco = risco;

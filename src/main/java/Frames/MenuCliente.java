@@ -1,3 +1,5 @@
+//Nome: Ian Felix Fernandes Matrícula: 202376007
+
 package Frames;
 
 import Investimentos.InvestimentoBase;
@@ -5,7 +7,6 @@ import Investimentos.RendaFixa;
 import Investimentos.RendaVariavel;
 import Usuarios.Cliente;
 import Usuarios.Gerente;
-import Usuarios.Usuario;
 
 import javax.swing.*;
 import java.awt.event.*;
