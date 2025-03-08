@@ -39,7 +39,7 @@ public class Cliente extends Usuario {
     }
 
     public List<Investimento> getInvestimentos() {
-        return this.investimentos;
+        return new ArrayList<>(this.investimentos);
     }
 
     public double getSaldo() {

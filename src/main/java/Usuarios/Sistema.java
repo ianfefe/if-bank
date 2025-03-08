@@ -17,19 +17,19 @@ public class Sistema {
     private static List<Gerente> gerentes = new ArrayList<>();
 
     public static List<Usuario> getUsuarios() {
-        return usuarios;
+        return new ArrayList<>(usuarios);
     }
 
     public static List<Cliente> getClientes() {
-        return clientes;
+        return new ArrayList<>(clientes);
     }
 
     public static List<Caixa> getCaixas() {
-        return caixas;
+        return new ArrayList<>(caixas);
     }
 
     public static List<Gerente> getGerentes() {
-        return gerentes;
+        return new ArrayList<>(gerentes);
     }
 
     private static void listaUsuarios() {

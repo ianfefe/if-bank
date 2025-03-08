@@ -29,7 +29,7 @@ public class Gerente extends Usuario implements Administrador {
     }
 
     public static List<RendaFixa> getListaRendaFixa() {
-        return listaRendaFixa;
+        return new ArrayList<>(listaRendaFixa);
     }
 
     public static void carregarRendaFixa() {
