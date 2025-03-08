@@ -2,7 +2,7 @@
 
 package Frames;
 
-import Usuarios.Caixa;
+import Usuario.Caixa;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;

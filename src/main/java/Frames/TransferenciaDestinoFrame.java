@@ -2,7 +2,7 @@
 
 package Frames;
 
-import Usuarios.Cliente;
+import Usuario.Cliente;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -11,6 +11,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.Objects;
 
 public class TransferenciaDestinoFrame extends JFrame {
     private JTextField campoValor;
@@ -29,10 +30,11 @@ public class TransferenciaDestinoFrame extends JFrame {
         Utility.adicionaBotaoCancelarOperacao(botaoCancelar, this);
 
         botaoTransferencia.addActionListener(e -> {
-            Cliente destino = Utility.encontraCliente(campoDestino.getText());
-            double valor = Utility.confereValorDouble(campoValor);
-            clienteOrigem.transferir(clienteOrigem, destino, valor);
-            dispose();
+                Cliente destino = Utility.encontraCliente(campoDestino.getText());
+                Objects.requireNonNull(destino);
+                double valor = Utility.confereValorDouble(campoValor);
+                clienteOrigem.transferir(clienteOrigem, destino, valor);
+                dispose();
         });
 
         campoValor.addFocusListener(new FocusAdapter() {

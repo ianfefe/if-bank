@@ -2,8 +2,8 @@
 
 package Frames;
 
-import Usuarios.Administrador;
-import Usuarios.Cliente;
+import Usuario.Administrador;
+import Usuario.Cliente;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -12,6 +12,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.Objects;
 
 public class SaqueFrame extends JFrame {
     private JFormattedTextField campoConta;
@@ -32,6 +33,8 @@ public class SaqueFrame extends JFrame {
 
             double valor = Utility.confereValorDouble(campoValor);
             Cliente origem = Utility.encontraCliente(campoConta.getText());
+            Objects.requireNonNull(origem);
+
             usuarioLogado.realizarSaque(origem, valor);
             dispose();
         });

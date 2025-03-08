@@ -4,8 +4,8 @@ package Frames;
 
 import Investimentos.Investimento;
 import Investimentos.RendaFixa;
-import Usuarios.Cliente;
-import Usuarios.Gerente;
+import Usuario.Cliente;
+import Usuario.Gerente;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;

@@ -4,8 +4,9 @@ package Frames;
 
 import Exceptions.CPFException;
 import TiposAtributos.*;
-import Usuarios.Sistema;
-import Usuarios.Usuario;
+import Usuario.Cliente;
+import Usuario.Sistema;
+import Usuario.Usuario;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -17,7 +18,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 
-import static Usuarios.Sistema.criarUsuario;
+import static Usuario.Sistema.criarUsuario;
 
 public class CadastroFrame extends JFrame {
     protected JTextField campoNome;
@@ -155,7 +156,7 @@ public class CadastroFrame extends JFrame {
         if (todosPreenchidos) {
             if (!tipoModificacao.equals("Edição")) {
                 for (Usuario usuario : Sistema.getUsuarios()) {
-                    if (usuario.getCpfString().equals(campoCPF.getText()) && usuario.getTipoUsuario().equals(tipoUsuario)) {
+                    if (usuario.getCpfString().equals(campoCPF.getText()) && usuario instanceof Cliente) {
                         JOptionPane.showMessageDialog(null, "CPF já cadastrado.");
                         throw new CPFException("CPF já cadastrado.");
                     }

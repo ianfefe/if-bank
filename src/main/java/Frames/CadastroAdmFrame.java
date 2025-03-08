@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.Objects;
 
-import static Usuarios.Sistema.criarUsuario;
+import static Usuario.Sistema.criarUsuario;
 
 public class CadastroAdmFrame extends CadastroFrame {
     public CadastroAdmFrame() {

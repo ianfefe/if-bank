@@ -1,6 +1,6 @@
 //Nome: Ian Felix Fernandes Matrícula: 202376007
 
-package Usuarios;
+package Usuario;
 
 import Exceptions.SaldoException;
 import Investimentos.Investimento;
@@ -24,9 +24,9 @@ public class Cliente extends Usuario {
                    Email email,
                    String senha) {
         super(nome, dataNascimento, cpf, endereco, telefone, email, senha);
-        tipoUsuario = "Cliente";
         this.saldo = 0;
         this.extrato = new Extrato();
+        this.tipo = "Cliente";
     }
 
     public void investir(String investimentoNome, RendaFixa investimentoBase, Double valor) {

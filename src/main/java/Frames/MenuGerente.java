@@ -3,9 +3,9 @@
 package Frames;
 
 import Investimentos.RendaFixa;
-import Usuarios.Gerente;
-import Usuarios.Sistema;
-import Usuarios.Usuario;
+import Usuario.Gerente;
+import Usuario.Sistema;
+import Usuario.Usuario;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -33,7 +33,7 @@ public class MenuGerente extends JFrame {
     private JButton botaoCriar;
     private JButton recarregarButton;
     private JButton botaoRemover;
-    private JList listaInvestimentosGerente;
+    private JList<String> listaInvestimentosGerente;
     private JButton botaoCriarInvestimento;
     private JButton botaoRecarregarInvestimentos;
     private JButton botaoRemoverInvestimento;
@@ -62,28 +62,20 @@ public class MenuGerente extends JFrame {
 
             DefaultListModel<Usuario> modelo = listaModeloUsuarios();
             int indice = listaUsuarios.getSelectedIndex();
-            for (Usuario usuario : Sistema.getUsuarios()) {
-                if (!usuario.equals(usuarioLogado)) {
-                    if (usuario.getCpf().equals(modelo.getElementAt(indice).getCpf())) {
-                        try {
-                            if (usuarioLogado.confirmaSenha()) {
-                                Sistema.removerUsuario(modelo.getElementAt(indice));
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Falha ao remover usuário, senha incorreta ou o usuário cancelou a operação.");
-                                return;
-                            }
-                        } catch (RuntimeException ex) {
-                            JOptionPane.showMessageDialog(null, "Falha ao remover usuário.");
-                            return;
-                        }
 
-                        JOptionPane.showMessageDialog(null, "Usuário removido com sucesso.\nClique em Recarregar para ver as alterações.");
+            Usuario selecionado = modelo.getElementAt(indice);
 
-                        break;
-                    }
+            if (selecionado.getCpfString().equals(usuarioLogado.getCpfString()) && selecionado.getTipo().equals(usuarioLogado.getTipo())) {
+                JOptionPane.showMessageDialog(null, "Não é possível remover o usuário conectado.");
+            } else if (selecionado.equals(Sistema.getUsuarios().get(indice))) {
+                if (usuarioLogado.confirmaSenha()) {
+                    Sistema.removerUsuario(selecionado);
+                    JOptionPane.showMessageDialog(null, "Usuário removido com sucesso. Recarregue a página para atualizar.");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Não é possível remover o usuário conectado.");
+                    JOptionPane.showMessageDialog(null, "Falha ao remover usuário, senha incorreta ou o usuário cancelou a operação.");
                 }
+            } else {
+                throw new RuntimeException("Usuário selecionado diverge do sistema.");
             }
         });
 
@@ -115,8 +107,6 @@ public class MenuGerente extends JFrame {
         for (Usuario usuario : Sistema.getUsuarios()) {
             if (usuario != null) {
                 modelo.addElement(usuario);
-            } else {
-                break;
             }
         }
         return modelo;
@@ -128,7 +118,7 @@ public class MenuGerente extends JFrame {
 
         DefaultListModel<String> listaUsuariosString = new DefaultListModel<>();
         for (int i = 0; i < modelo.getSize(); i++) {
-            listaUsuariosString.addElement(modelo.getElementAt(i).getNome() + " - " + modelo.getElementAt(i).getCpfString() + " - " + modelo.getElementAt(i).getTipoUsuario());
+            listaUsuariosString.addElement(modelo.getElementAt(i).getNome() + " - " + modelo.getElementAt(i).getCpfString());
         }
 
         if (!modelo.isEmpty()) {

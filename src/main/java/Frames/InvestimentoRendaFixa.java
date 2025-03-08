@@ -3,7 +3,7 @@
 package Frames;
 
 import Investimentos.RendaFixa;
-import Usuarios.Cliente;
+import Usuario.Cliente;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

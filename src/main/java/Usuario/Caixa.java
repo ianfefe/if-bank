@@ -1,6 +1,6 @@
 //Nome: Ian Felix Fernandes Matrícula: 202376007
 
-package Usuarios;
+package Usuario;
 
 import TiposAtributos.*;
 
@@ -18,7 +18,7 @@ public class Caixa extends Usuario implements Administrador {
                  String senha) {
         super(nome, dataNascimento, cpf, endereco, telefone, email, senha);
         userID = id + "C";
-        tipoUsuario = "Caixa";
+        this.tipo="Caixa";
     }
 
     @Override

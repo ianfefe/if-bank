@@ -5,12 +5,12 @@ package Frames;
 import TiposAtributos.Email;
 import TiposAtributos.Endereco;
 import TiposAtributos.Telefone;
-import Usuarios.Usuario;
+import Usuario.Usuario;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-import static Usuarios.Sistema.editarUsuario;
+import static Usuario.Sistema.editarUsuario;
 
 public class EdicaoDadosFrame extends CadastroFrame {
     private final Usuario usuario;

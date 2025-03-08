@@ -1,5 +1,5 @@
 import TiposAtributos.*;
-import Usuarios.Cliente;
+import Usuario.Cliente;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

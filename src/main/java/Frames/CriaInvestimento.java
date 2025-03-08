@@ -2,7 +2,7 @@
 
 package Frames;
 
-import Usuarios.Gerente;
+import Usuario.Gerente;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 

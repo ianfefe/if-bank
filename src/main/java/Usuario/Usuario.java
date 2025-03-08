@@ -1,6 +1,6 @@
 //Nome: Ian Felix Fernandes Matrícula: 202376007
 
-package Usuarios;
+package Usuario;
 
 import TiposAtributos.*;
 
@@ -8,16 +8,16 @@ import javax.swing.*;
 import java.util.Objects;
 
 public class Usuario {
+    protected String tipo = "Usuario";
     protected final DataDeNascimento dataNascimento;
     protected final CPF cpf;
-    protected int id = Sistema.getClientes().size() + Sistema.getCaixas().size() + Sistema.getGerentes().size();
+    protected int id = Sistema.getUsuarios().size();
     protected String userID = String.valueOf(id);
     protected String nome;
     protected Endereco endereco;
     protected Telefone telefone;
     protected Email email;
     protected String senha;
-    protected String tipoUsuario;
 
     public Usuario(String nome,
                    DataDeNascimento dataNascimento,
@@ -58,7 +58,7 @@ public class Usuario {
 
             if (senhatemp == null) {
                 return false;
-            } else if (this.verificaSenha(senhatemp)) {
+            } else if (this.comparaSenha(senhatemp)) {
                 return true;
             } else {
                 if (i > 1)
@@ -68,8 +68,12 @@ public class Usuario {
         return false;
     }
 
-    public boolean verificaSenha(String senha) {
+    public boolean comparaSenha(String senha) {
         return this.senha.equals(senha);
+    }
+
+    public String getTipo(){
+        return this.tipo;
     }
 
     public String getNome() {
@@ -78,10 +82,6 @@ public class Usuario {
 
     public String getUserID() {
         return this.userID;
-    }
-
-    public String getTipoUsuario() {
-        return this.tipoUsuario;
     }
 
     public DataDeNascimento getDataNascimento() {

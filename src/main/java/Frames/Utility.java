@@ -2,8 +2,9 @@
 
 package Frames;
 
-import Usuarios.Cliente;
-import Usuarios.Sistema;
+import Usuario.Cliente;
+import Usuario.Sistema;
+import Usuario.Usuario;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -49,13 +50,13 @@ public class Utility {
     }
 
     public static Cliente encontraCliente(String cpf) {
-        for (Cliente cliente : Sistema.getClientes()) {
-            if (cliente.getCpfString().equals(cpf)) {
-                return cliente;
+        for (Usuario cliente : Sistema.getUsuarios()) {
+            if (cliente.getCpfString().equals(cpf) && cliente instanceof Cliente) {
+                return (Cliente) cliente;
             }
         }
         JOptionPane.showMessageDialog(null, "Conta não encontrada.", "Conta inválida.", JOptionPane.ERROR_MESSAGE);
-        throw new RuntimeException("Conta não encontrada.");
+        throw new RuntimeException("Não foi possível encontrar cliente.");
     }
 
     public static void adicionaOpcaoDeslogarUsuario(JButton botao, Window tela) {

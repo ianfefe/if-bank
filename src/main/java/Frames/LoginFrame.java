@@ -1,10 +1,7 @@
 //Nome: Ian Felix Fernandes Matrícula: 202376007
 package Frames;
 
-import Usuarios.Caixa;
-import Usuarios.Cliente;
-import Usuarios.Gerente;
-import Usuarios.Sistema;
+import Usuario.*;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -35,26 +32,22 @@ public class LoginFrame extends JFrame {
         botaoLogin.addActionListener(e -> {
 
             validarCampos(e);
+            Object usuarioLogin = Sistema.logarUsuario(formataUsuarioCliente(), new String(campoSenha.getPassword()));
 
-            if (getTipoUsuario().equals("Cliente")) {
-                Cliente usuarioLogado = Sistema.logarCliente(formataUsuarioCliente(), new String(campoSenha.getPassword()));
-                if (usuarioLogado == null) {
-                    JOptionPane.showMessageDialog(null, "Usuário não encontrado", "Login mal sucedido", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+            System.out.println(usuarioLogin.getClass().getSimpleName());
+
+            if (usuarioLogin instanceof Cliente) {
+                SwingUtilities.invokeLater(() -> new MenuCliente((Cliente) usuarioLogin).setVisible(true));
                 dispose();
-                new MenuCliente(usuarioLogado).setVisible(true);
+            } else if (usuarioLogin instanceof Caixa) {
+                SwingUtilities.invokeLater(() -> new MenuCaixa((Caixa) usuarioLogin).setVisible(true));
+                dispose();
+            } else if (usuarioLogin instanceof Gerente) {
+                SwingUtilities.invokeLater(() -> new MenuGerente((Gerente) usuarioLogin).setVisible(true));
+                dispose();
             } else {
-                Object usuarioLogado = Sistema.logarAdm(campoUsuario.getText(), new String(campoSenha.getPassword()));
-                if (usuarioLogado == null) {
-                    JOptionPane.showMessageDialog(null, "Usuário não encontrado", "Login mal sucedido", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                if (usuarioLogado instanceof Caixa)
-                    new MenuCaixa((Caixa) usuarioLogado).setVisible(true);
-                else
-                    new MenuGerente((Gerente) usuarioLogado).setVisible(true);
-                dispose();
+                JOptionPane.showMessageDialog(null, "Não foi possível logar usuário, tipo desconhecido.");
+                throw new RuntimeException("Não foi possível logar usuário, tipo desconhecido.");
             }
         });
 
@@ -62,22 +55,19 @@ public class LoginFrame extends JFrame {
             dispose();
             new CadastroFrame().setVisible(true);
         });
+
     }
 
     private String formataUsuarioCliente() {
-        String parte1 = campoUsuario.getText().substring(0, 3);
-        String parte2 = campoUsuario.getText().substring(3, 6);
-        String parte3 = campoUsuario.getText().substring(6, 9);
-        String parte4 = campoUsuario.getText().substring(9, 11);
+        if (campoUsuario.getText().matches("\\d{11}")) {
+            String parte1 = campoUsuario.getText().substring(0, 3);
+            String parte2 = campoUsuario.getText().substring(3, 6);
+            String parte3 = campoUsuario.getText().substring(6, 9);
+            String parte4 = campoUsuario.getText().substring(9, 11);
 
-        return parte1 + "." + parte2 + "." + parte3 + "-" + parte4;
-    }
-
-    private String getTipoUsuario() {
-        if (campoUsuario.getText().matches("^[0-9]{11}$")) {
-            return "Cliente";
+            return parte1 + "." + parte2 + "." + parte3 + "-" + parte4;
         } else {
-            return "Administrador";
+            return campoUsuario.getText();
         }
     }
 

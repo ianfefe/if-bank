@@ -1,6 +1,6 @@
 //Nome: Ian Felix Fernandes Matrícula: 202376007
 
-package Usuarios;
+package Usuario;
 
 public interface Administrador {
     void realizarSaque(Cliente origem, double valor);

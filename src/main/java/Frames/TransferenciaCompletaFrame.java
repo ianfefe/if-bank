@@ -2,7 +2,7 @@
 
 package Frames;
 
-import Usuarios.Cliente;
+import Usuario.Cliente;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -11,6 +11,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.Objects;
 
 public class TransferenciaCompletaFrame extends JFrame {
     private JFormattedTextField campoOrigem;
@@ -32,8 +33,12 @@ public class TransferenciaCompletaFrame extends JFrame {
 
 
         botaoTransferir.addActionListener(e -> {
+
             Cliente origem = Utility.encontraCliente(campoOrigem.getText());
-            Cliente destino = Utility.encontraCliente(campoDestino.getText());
+            Cliente destino = Utility.encontraCliente(campoOrigem.getText());
+            Objects.requireNonNull(origem);
+            Objects.requireNonNull(destino);
+
             double valor = Utility.confereValorDouble(campoValor);
             origem.transferir(origem, destino, valor);
             dispose();
