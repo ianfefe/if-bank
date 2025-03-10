@@ -33,7 +33,7 @@ public class Sistema {
             }
         }else{
             for(Usuario usuarioDaLista : usuarios){
-                if(usuarioDaLista.getCpfString().equals(usuario) && usuarioDaLista.comparaSenha(senha)){
+                if(usuarioDaLista.getCpfString().equals(usuario) && usuarioDaLista.comparaSenha(senha) && usuarioDaLista.getTipo().equals("Cliente")){
                     return usuarioDaLista;
                 }
             }
@@ -42,7 +42,7 @@ public class Sistema {
         throw new RuntimeException("Não foi possível logar usuário.");
     }
 
-    public static void criarUsuario(String nome, DataDeNascimento dataNascimento, CPF cpf, Endereco endereco, Telefone telefone, Email email, String senha, String tipoUsuario) {
+    public static void criarUsuario(Nome nome, DataDeNascimento dataNascimento, CPF cpf, Endereco endereco, Telefone telefone, Email email, String senha, String tipoUsuario) {
 
         switch (tipoUsuario) {
             case "Gerente":
@@ -68,7 +68,7 @@ public class Sistema {
     }
 
     public static void editarUsuario(Usuario usuario,
-                                     String nome,
+                                     Nome nome,
                                      Endereco endereco,
                                      Telefone telefone,
                                      Email email,

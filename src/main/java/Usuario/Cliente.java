@@ -16,7 +16,7 @@ public class Cliente extends Usuario {
     private final List<Investimento> investimentos = new ArrayList<>();
     private double saldo;
 
-    public Cliente(String nome,
+    public Cliente(Nome nome,
                    DataDeNascimento dataNascimento,
                    CPF cpf,
                    Endereco endereco,

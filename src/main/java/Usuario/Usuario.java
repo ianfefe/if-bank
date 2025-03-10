@@ -13,13 +13,13 @@ public class Usuario {
     protected final CPF cpf;
     protected int id = Sistema.getUsuarios().size();
     protected String userID = String.valueOf(id);
-    protected String nome;
+    protected Nome nome;
     protected Endereco endereco;
     protected Telefone telefone;
     protected Email email;
     protected String senha;
 
-    public Usuario(String nome,
+    public Usuario(Nome nome,
                    DataDeNascimento dataNascimento,
                    CPF cpf,
                    Endereco endereco,
@@ -37,7 +37,7 @@ public class Usuario {
 
     }
 
-    protected void editaUsuario(String nome,
+    protected void editaUsuario(Nome nome,
                                 Endereco endereco,
                                 Telefone telefone,
                                 Email email,
@@ -77,7 +77,7 @@ public class Usuario {
     }
 
     public String getNome() {
-        return this.nome;
+        return this.nome.getNome();
     }
 
     public String getUserID() {

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Caixa extends Usuario implements Administrador {
 
-    public Caixa(String nome,
+    public Caixa(Nome nome,
                  DataDeNascimento dataNascimento,
                  CPF cpf,
                  Endereco endereco,

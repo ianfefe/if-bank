@@ -15,7 +15,7 @@ public class Gerente extends Usuario implements Administrador {
 
     private static List<RendaFixa> listaRendaFixa = new ArrayList<>();
 
-    public Gerente(String nome,
+    public Gerente(Nome nome,
                    DataDeNascimento dataNascimento,
                    CPF cpf,
                    Endereco endereco,
