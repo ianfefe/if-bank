@@ -4,7 +4,6 @@ package Frames;
 
 import Exceptions.CPFException;
 import TiposAtributos.*;
-import Usuario.Cliente;
 import Usuario.Sistema;
 import Usuario.Usuario;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -76,7 +75,7 @@ public class CadastroFrame extends JFrame {
         if (senha.equals(senhaConfirma)) {
             if (validarCampos(e, "Cliente", "Cadastro")) {
                 criarUsuario(
-                        campoNome.getText(),
+                        new Nome(campoNome.getText()),
                         new DataDeNascimento(campoDataNascimento.getText()),
                         new CPF(campoCPF.getText()),
                         new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem()),
@@ -99,65 +98,53 @@ public class CadastroFrame extends JFrame {
 
         boolean todosPreenchidos = true;
 
-        try {
+        if (campoNome.getText().isBlank())
+            todosPreenchidos = false;
 
-            if (campoNome.getText().isBlank())
-                todosPreenchidos = false;
-
-            if (campoDataNascimento.getText().replaceAll("_", "").isBlank()) {
-                todosPreenchidos = false;
-            } else {
-                new DataDeNascimento(campoDataNascimento.getText());
-            }
-
-            if (campoCPF.getText().replaceAll("_", "").isBlank()) {
-                todosPreenchidos = false;
-            } else {
-                new CPF(campoCPF.getText());
-            }
-
-            if (campoEmail.getText().isBlank()) {
-                todosPreenchidos = false;
-            } else {
-                new Email(campoEmail.getText());
-            }
-
-            if (campoTelefone.getText().replaceAll("[_()-]", "").trim().isEmpty()) {
-                todosPreenchidos = false;
-            } else {
-                new Telefone(campoTelefone.getText());
-            }
-
-            if (campoNumeroEndereco.getText().isBlank()) {
-                todosPreenchidos = false;
-            } else {
-                if (campoRua.getText().isBlank()) {
-                    todosPreenchidos = false;
-                } else {
-                    new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem());
-                }
-            }
-
-            if (new String(campoSenha.getPassword()).isEmpty())
-                todosPreenchidos = false;
-
-            if (new String(campoSenhaConfirma.getPassword()).isEmpty())
-                todosPreenchidos = false;
-        } catch (RuntimeException ex) {
-            JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.\n " +
-                    "Verifique se as informações são válidas.\n" +
-                    "-A data de nascimento deve ser válida e maior de 18 anos.\n" +
-                    "-O email deve ser válido.\n" +
-                    "-Rua não pode conter números.");
-            return false;
+        if (campoDataNascimento.getText().replaceAll("_", "").isBlank()) {
+            todosPreenchidos = false;
+        } else {
+            new DataDeNascimento(campoDataNascimento.getText());
         }
 
+        if (campoCPF.getText().replaceAll("_", "").isBlank()) {
+            todosPreenchidos = false;
+        } else {
+            new CPF(campoCPF.getText());
+        }
+
+        if (campoEmail.getText().isBlank()) {
+            todosPreenchidos = false;
+        } else {
+            new Email(campoEmail.getText());
+        }
+
+        if (campoTelefone.getText().replaceAll("[_()-]", "").trim().isEmpty()) {
+            todosPreenchidos = false;
+        } else {
+            new Telefone(campoTelefone.getText());
+        }
+
+        if (campoNumeroEndereco.getText().isBlank()) {
+            todosPreenchidos = false;
+        } else {
+            if (campoRua.getText().isBlank()) {
+                todosPreenchidos = false;
+            } else {
+                new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem());
+            }
+        }
+
+        if (new String(campoSenha.getPassword()).isEmpty())
+            todosPreenchidos = false;
+
+        if (new String(campoSenhaConfirma.getPassword()).isEmpty())
+            todosPreenchidos = false;
 
         if (todosPreenchidos) {
             if (!tipoModificacao.equals("Edição")) {
                 for (Usuario usuario : Sistema.getUsuarios()) {
-                    if (usuario.getCpfString().equals(campoCPF.getText()) && usuario instanceof Cliente) {
-                        JOptionPane.showMessageDialog(null, "CPF já cadastrado.");
+                    if (usuario.getCpfString().equals(campoCPF.getText()) && usuario.getTipo().equals((String) comboBoxTipoUsuario.getSelectedItem())) {
                         throw new CPFException("CPF já cadastrado.");
                     }
                 }
@@ -240,6 +227,7 @@ public class CadastroFrame extends JFrame {
         telefone.setText("Telefone");
         endereco.add(telefone, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         campoEmail = new JTextField();
+        campoEmail.setEditable(true);
         endereco.add(campoEmail, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         campoTelefone = new JFormattedTextField();
         endereco.add(campoTelefone, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -272,10 +260,12 @@ public class CadastroFrame extends JFrame {
         formasContato.add(complementoBox, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tiposUsuarioPanel = new JPanel();
         tiposUsuarioPanel.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        tiposUsuarioPanel.setEnabled(true);
         tiposUsuarioPanel.setVisible(false);
         formasContato.add(tiposUsuarioPanel, new GridConstraints(1, 2, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         tiposUsuarioPanel.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         comboBoxTipoUsuario = new JComboBox();
+        comboBoxTipoUsuario.setEnabled(true);
         final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
         defaultComboBoxModel2.addElement("Cliente");
         defaultComboBoxModel2.addElement("Caixa");

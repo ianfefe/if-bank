@@ -36,7 +36,7 @@ public class CadastroAdmFrame extends CadastroFrame {
         if (senha.equals(senhaConfirma)) {
             if (validarCampos(e, (String) comboBoxTipoUsuario.getSelectedItem(), "Cadastro")) {
                 criarUsuario(
-                        campoNome.getText(),
+                        new Nome(campoNome.getText()),
                         new DataDeNascimento(campoDataNascimento.getText()),
                         new CPF(campoCPF.getText()),
                         new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem()),

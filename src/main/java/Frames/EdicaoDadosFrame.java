@@ -4,6 +4,7 @@ package Frames;
 
 import TiposAtributos.Email;
 import TiposAtributos.Endereco;
+import TiposAtributos.Nome;
 import TiposAtributos.Telefone;
 import Usuario.Usuario;
 
@@ -49,12 +50,12 @@ public class EdicaoDadosFrame extends CadastroFrame {
                 if (validarCampos(e, (String) comboBoxTipoUsuario.getSelectedItem(), "Edição")) {
                     editarUsuario(
                             this.usuario,
-                            campoNome.getText(),
+                            new Nome(campoNome.getText()),
                             new Endereco(campoRua.getText(), campoNumeroEndereco.getText(), (String) complementoBox.getSelectedItem()),
                             new Telefone(campoTelefone.getText()),
                             new Email(campoEmail.getText()),
                             new String(campoSenha.getPassword()));
-                    JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Dados alterados com sucesso.\n Clique em Recarregar para ver as alterações. \n Algumas mudanças só surtirão efeito no próximo login.");
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -63,8 +64,6 @@ public class EdicaoDadosFrame extends CadastroFrame {
             } else {
                 JOptionPane.showMessageDialog(campoSenhaConfirma, "Senha diferente.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Dados alterados com sucesso.\n Clique em Recarregar para ver as alterações.");
         }
     }
 

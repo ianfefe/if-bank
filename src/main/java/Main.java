@@ -14,7 +14,7 @@ public class Main {
         Sistema.carregarUsuarios();
 
         if(Sistema.getUsuarios().isEmpty()){
-            Sistema.criarUsuario("Adm", new DataDeNascimento("01/01/2000"), new CPF("111.111.111-11"), new Endereco("abc", "123", "Casa"), new Telefone("(32)3222-2223"), new Email("aaaaa@gmail.com"), "123", "Gerente");
+            Sistema.criarUsuario(new Nome("Adm"), new DataDeNascimento("01/01/2000"), new CPF("111.111.111-11"), new Endereco("abc", "123", "Casa"), new Telefone("(32)3222-2223"), new Email("aaaaa@gmail.com"), "123", "Gerente");
         }
 
         Gerente.carregarRendaFixa();
