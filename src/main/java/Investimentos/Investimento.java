@@ -11,7 +11,6 @@ public class Investimento {
     private final String nome;
     private double valorAplicado;
     private RendaFixa investimento;
-    private boolean estado = true;
 
     public Investimento(String nome, double valorAplicado, RendaFixa investimento) {
         Objects.requireNonNull(investimento);
@@ -27,10 +26,6 @@ public class Investimento {
 
     public String getNome() {
         return this.nome;
-    }
-
-    public boolean getEstado() {
-        return this.estado;
     }
 
     public double getValorAplicado() {
